@@ -1,9 +1,8 @@
 ﻿using CoinMarketCap.Client;
 using Newtonsoft.Json;
 using System;
-using System.Net;
 
-namespace CoinMarketCapTest
+namespace CoinMarketCapDemo
 {
     internal class Program
     {
@@ -130,98 +129,5 @@ namespace CoinMarketCapTest
             Console.WriteLine("[Enter] to continue...");
             Console.ReadLine();
         }
-
-        private static void WatchTriggerTest()
-        {
-            var trigger = new WatchTrigger
-            {
-                Amount = 3.28,
-                Symbol = "XTZ",
-                TriggerType = eWatchTriggerType.Under
-            };
-            double lastPrice = 0;
-            while (true)
-            {
-                try
-                {
-                    var client = new CryptocurrencyClient();
-                    var xtz = client.QuotesLatestBySymbol("XTZ");
-                    foreach (var coin in xtz.Data)
-                    {
-                        Console.WriteLine($"Retrieved quote for {coin.Key}:");
-                        foreach (var quote in coin.Value.Quote)
-                        {
-                            Console.Write($"\t{quote.Key}:\t{quote.Value.Price:C6}");
-                        }
-                    }
-
-                    // Show change for XTZ
-                    var price = xtz.Data["XTZ"].Quote["USD"].Price;
-                    if (lastPrice <= 0)
-                    {
-                        // first iteration
-                    }
-                    else if (Math.Abs(price - lastPrice) < 1e-11)
-                    {
-                        Console.Write("\t==");
-                    }
-                    else if (price > lastPrice)
-                    {
-                        Console.Write($"\tUP +{price - lastPrice}");
-                    }
-                    else
-                    {
-                        Console.Write($"\tDOWN {lastPrice - price}");
-                    }
-
-                    // Check the trigger
-                    if (trigger.Eval(price))
-                    {
-                        Console.Write("\t!!! TRIGGER !!!");
-                    }
-
-                    lastPrice = price;
-                    Console.WriteLine();
-                }
-                catch (WebException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-
-                Console.WriteLine("\n[Enter] to refresh; [x] to quit...");
-                var input = Console.ReadLine() ?? string.Empty;
-                if (input.Equals("x", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return;
-                }
-            }
-        }
-    }
-
-
-    internal class WatchTrigger
-    {
-        public string Symbol { get; set; }
-        public eWatchTriggerType TriggerType { get; set; }
-        public double Amount { get; set; }
-
-        public bool Eval(double price)
-        {
-            switch (TriggerType)
-            {
-                case eWatchTriggerType.Over:
-                    return price > Amount;
-                case eWatchTriggerType.Under:
-                    return price < Amount;
-                default:
-                    return false;
-            }
-        }
-    }
-
-    internal enum eWatchTriggerType
-    {
-        Over,
-        Under
     }
 }
