@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinMarketCap", "CoinMarket
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{2B62ECFA-E333-42B3-8CE0-B08C56A0279D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinMarketCapTest", "CoinMarketCapDemo\CoinMarketCapTest.csproj", "{A935E72F-104F-4273-A73C-B57C47B0E719}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinMarketCapDemo", "CoinMarketCapDemo\CoinMarketCapDemo.csproj", "{A935E72F-104F-4273-A73C-B57C47B0E719}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
