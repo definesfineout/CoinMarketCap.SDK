@@ -1,6 +1,7 @@
 ﻿using CoinMarketCap.DataContracts;
 using Newtonsoft.Json;
 using System;
+using System.Configuration;
 using System.Globalization;
 using System.Net;
 using System.Web;
@@ -10,8 +11,9 @@ namespace CoinMarketCap.Client
     // ReSharper disable once UnusedMember.Global
     public class CryptocurrencyClient
     {
-        //TODO: Move CoinMarketCap.ApiKey to config
-        private const string ApiKey = "YOUR API KEY HERE";
+        //TODO: ApiClientBase with initialization and shared members
+
+        private static readonly string ApiKey = ConfigurationManager.AppSettings["CoinMarketCap.ApiKey"];
         private const string MetadataDefaultAux = "urls,logo,description,tags,platform,date_added,notice";
         private const string QuotesLatestDefaultAux = "num_market_pairs, cmc_rank, date_added, tags, platform, max_supply, circulating_supply, total_supply";
 

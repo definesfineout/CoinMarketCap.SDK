@@ -1,11 +1,17 @@
 # CoinMarketCap .NET
 A free, open-source .NET client SDK for the [CoinMarketCap API](https://coinmarketcap.com/api/).
 
+CoinMarketCap .NET targets [.NET Standard 2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) and is supported by the following platforms: .NET Core, .NET Framework, Mono, Xamarin.iOS, Xamarin.Mac, Xamarin.Android, Universal Windows Platform, and Unity.
+
 ## Quick Start
 Add your CoinMarketCap API key to your application's settings:
 
 ```xml
-TODO
+<configuration>
+  <appSettings>
+    <add key="CoinMarketCap.ApiKey" value="YOUR API KEY HERE"/>
+  </appSettings>
+</configuration>
 ```
 
 Then, simply new up a client for your desired endpoint and call any of the endpoint's methods:
