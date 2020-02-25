@@ -18,7 +18,12 @@ var response = client.Metadata("XTZ");
 ```
 
 ## Contribute
-You are welcome to fork and send pull requests. To get in touch, email Defines Fineout at  [dustin.fineout@gmail.com](mailto:dustin.fineout@gmail.com "Email Defines Fineout").
+You are welcome to fork and send pull requests. Code reviews and suggestions are always appreciated!
+
+* [How To: Fork a GitHub Repository & Submit a Pull Request](https://jarv.is/notes/how-to-pull-request-fork-github/)
+* [How to keep your fork up to date with its origin](https://about.gitlab.com/blog/2016/12/01/how-to-keep-your-fork-up-to-date-with-its-origin/)
+
+To get in touch, [email Defines Fineout](mailto:dustin.fineout@gmail.com).
 
 ### Tips
 CoinMarketCap .NET will always be free.

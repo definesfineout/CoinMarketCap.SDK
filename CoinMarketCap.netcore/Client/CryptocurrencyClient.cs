@@ -7,11 +7,10 @@ using System.Web;
 
 namespace CoinMarketCap.Client
 {
-    // ReSharper disable once UnusedMember.Global
     public class CryptocurrencyClient
     {
         //TODO: Move CoinMarketCap.ApiKey to config
-        private const string ApiKey = "YOUR API KEY HERE";
+        private const string ApiKey = "a7218d97-eefc-44ea-9404-e3a7025f05f2";
         private const string MetadataDefaultAux = "urls,logo,description,tags,platform,date_added,notice";
         private const string QuotesLatestDefaultAux = "num_market_pairs, cmc_rank, date_added, tags, platform, max_supply, circulating_supply, total_supply";
 
@@ -23,19 +22,16 @@ namespace CoinMarketCap.Client
 
         #region Endpoint: /v1/cryptocurrency/info - Metadata
 
-        // ReSharper disable once UnusedMember.Global
         public ApiResponseMap<CryptocurrencyMetadata> MetadataById(
             string id, string aux = MetadataDefaultAux)
         {
             return Metadata(id, null, null, aux);
         }
-        // ReSharper disable once UnusedMember.Global
         public ApiResponseMap<CryptocurrencyMetadata> MetadataBySlug(
             string slug, string aux = MetadataDefaultAux)
         {
             return Metadata(null, slug, null, aux);
         }
-        // ReSharper disable once UnusedMember.Global
         public ApiResponseMap<CryptocurrencyMetadata> MetadataBySymbol(
             string symbol, string aux = MetadataDefaultAux)
         {

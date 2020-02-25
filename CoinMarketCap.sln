@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinMarketCap", "CoinMarketCap\CoinMarketCap.csproj", "{B801B8C4-28E4-438C-8348-03FBCB1895F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoinMarketCap", "CoinMarketCap\CoinMarketCap.csproj", "{4CF63A29-8C18-4824-8971-45C631FE40EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B801B8C4-28E4-438C-8348-03FBCB1895F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B801B8C4-28E4-438C-8348-03FBCB1895F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B801B8C4-28E4-438C-8348-03FBCB1895F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B801B8C4-28E4-438C-8348-03FBCB1895F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CF63A29-8C18-4824-8971-45C631FE40EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CF63A29-8C18-4824-8971-45C631FE40EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CF63A29-8C18-4824-8971-45C631FE40EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CF63A29-8C18-4824-8971-45C631FE40EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
