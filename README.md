@@ -34,6 +34,8 @@ To get in touch, [email Defines Fineout](mailto:dustin.fineout@gmail.com).
 ### Tips
 CoinMarketCap .NET will always be free.
 
+Tips are lovely via [Brave Rewards](https://brave.com/dus347), or to the following addresses:
+
 | Coin | Address                                    |
 | ---- | ------------------------------------------ |
 | USDC | 0x9f8C89B66D7E092a72601Db336464d68e158f2b7 |
