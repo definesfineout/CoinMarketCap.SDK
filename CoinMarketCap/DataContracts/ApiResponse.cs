@@ -27,35 +27,30 @@ namespace CoinMarketCap.DataContracts
     {
         /// <summary>
         /// The current time on the server when the call was executed.
-        /// timestamp
         /// </summary>
         [DataMember(Name="timestamp")]
         public string Timestamp { get; set; }
 
         /// <summary>
         /// Code for error encountered, if any.
-        /// timestamp
         /// </summary>
         [DataMember(Name = "error_code")]
         public int ErrorCode { get; set; }
 
         /// <summary>
         /// Message for error encountered, if any.
-        /// timestamp
         /// </summary>
         [DataMember(Name = "error_message")]
         public string ErrorMessage { get; set; }
 
         /// <summary>
         /// The number of milliseconds it took to process the request.
-        /// timestamp
         /// </summary>
         [DataMember(Name = "elapsed")]
         public int Elapsed { get; set; }
 
         /// <summary>
         /// The number of API call credits this call utilized.
-        /// timestamp
         /// </summary>
         [DataMember(Name = "credit_count")]
         public int CreditCount { get; set; }
