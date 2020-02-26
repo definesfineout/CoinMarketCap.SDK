@@ -223,5 +223,102 @@ namespace CoinMarketCap.Client
 
         #endregion Endpoint: /v1/cryptocurrency/quotes/latest - Latest quotes
 
+        #region Endpoint: /v1/cryptopcurrency/quotes/historical - Historical Quotes
+
+        /// <summary>
+        /// <see cref="QuotesHistorical"/>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="time_start"></param>
+        /// <param name="time_end"></param>
+        /// <param name="count"></param>
+        /// <param name="interval"></param>
+        /// <param name="convert"></param>
+        /// <param name="convertId"></param>
+        /// <param name="aux"></param>
+        /// <returns></returns>
+        public ApiResponse<CryptocurrencytHistoricalData> QuotesHistoricalById(
+            string id, DateTime? time_start = null,
+            DateTime? time_end = null, int? count = null, string interval = null, string convert = null,
+            string convertId = null, string aux = null)
+        {
+            return QuotesHistorical(id, null, time_start, time_end, count, interval, convert, convertId, aux);
+        }
+
+        /// <summary>
+        /// <see cref="QuotesHistorical"/>
+        /// </summary>
+        /// <param name="symbol"></param>
+        /// <param name="time_start"></param>
+        /// <param name="time_end"></param>
+        /// <param name="count"></param>
+        /// <param name="interval"></param>
+        /// <param name="convert"></param>
+        /// <param name="convertId"></param>
+        /// <param name="aux"></param>
+        /// <returns></returns>
+        public ApiResponse<CryptocurrencytHistoricalData> QuotesHistoricalBySymbol(
+           string symbol, DateTime? time_start = null, DateTime? time_end = null,
+           int? count = null, string interval = null, string convert = null,
+           string convertId = null, string aux = null)
+        {
+            return QuotesHistorical(null, symbol, time_start, time_end, count, interval, convert, convertId, aux);
+        }
+
+        /// <summary>
+        /// Returns an interval of historic market quotes for any cryptocurrency based on time and interval parameters.
+        /// <remarks>See https://coinmarketcap.com/api/documentation/v1/#operation/getV1CryptocurrencyQuotesHistorical </remarks>
+        /// </summary>
+        /// <param name="id">One or more comma-separated cryptocurrency CoinMarketCap IDs. Example: 1,2</param>
+        /// <param name="symbol"></param>
+        /// <param name="time_start">Timestamp(Unix or ISO 8601) to start returning quotes for. Optional, if not passed,            returns        quotes calculated in reverse from "time_end".</param>
+        /// <param name="time_end">Timestamp (Unix or ISO 8601) to stop returning quotes for (inclusive). Optional, if not passed, defaults   to   the current time.</param>
+        /// <param name="count">The number of interval periods to return results for. Optional, required if both "time_start" and "time_end"       aren't supplied. The default is 10.</param>
+        /// <param name="interval">Interval of time to return data points for. If null, defaults to "5m".</param>
+        /// <param name="convert"></param>
+        /// <param name="convertId"></param>
+        /// <param name="aux"></param>
+        /// <returns>Results of your query returned as an object map.</returns>
+        public ApiResponse<CryptocurrencytHistoricalData> QuotesHistorical(
+            string id = null, string symbol = null, DateTime? time_start = null,
+            DateTime? time_end = null, int? count = 2, string interval = null, string convert = null,
+            string convertId = null, string aux = null)
+
+        {
+            if (string.IsNullOrWhiteSpace(id) &&
+                string.IsNullOrWhiteSpace(symbol))
+            {
+                throw new ArgumentException($"Must specify one of: {nameof(id)}, or {nameof(symbol)}",
+                    nameof(id));
+            }
+
+            // It's possible these aren't necessary. I wasn't sure.
+            if (!time_end.HasValue && time_start.HasValue)
+            {
+                time_end = DateTime.UtcNow;
+            }
+
+            if (!time_start.HasValue && !time_end.HasValue && !count.HasValue)
+            {
+                count = 10;
+            }
+            //
+
+            return ApiRequest<ApiResponse<CryptocurrencytHistoricalData>>("cryptocurrency/quotes/historical",
+                new Dictionary<string, string>
+                {
+                    ["id"] = id,
+                    ["symbol"] = symbol,
+                    ["time_start"] = time_start.Value.ToLongDateString(),
+                    ["time_end"] = time_end.Value.ToLongDateString(),
+                    ["count"] = count?.ToString(),
+                    ["interval"] = interval,
+                    ["convert"] = convert,
+                    ["convert_id"] = convertId,
+                    ["aux"] = aux
+                });
+
+        }
+        #endregion Endpoint: /v1/cryptopcurrency/quotes/historical
     }
 }
