@@ -1,21 +1,14 @@
 ﻿using CoinMarketCap.DataContracts;
-using Newtonsoft.Json;
 using System;
-using System.Configuration;
+using System.Collections.Generic;
 using System.Globalization;
-using System.Net;
-using System.Web;
 
 namespace CoinMarketCap.Client
 {
     // ReSharper disable once UnusedMember.Global
-    public class CryptocurrencyClient
+    public class CryptocurrencyClient : ApiClientBase
     {
         //TODO: ApiClientBase with initialization and shared members
-
-        private static readonly string ApiKey = ConfigurationManager.AppSettings["CoinMarketCap.ApiKey"];
-        private const string MetadataDefaultAux = "urls,logo,description,tags,platform,date_added,notice";
-        private const string QuotesLatestDefaultAux = "num_market_pairs, cmc_rank, date_added, tags, platform, max_supply, circulating_supply, total_supply";
 
         #region Endpoint: /v1/cryptocurrency/map - CoinMarketCap ID map
 
@@ -27,19 +20,19 @@ namespace CoinMarketCap.Client
 
         // ReSharper disable once UnusedMember.Global
         public ApiResponseMap<CryptocurrencyMetadata> MetadataById(
-            string id, string aux = MetadataDefaultAux)
+            string id, string aux = null)
         {
             return Metadata(id, null, null, aux);
         }
         // ReSharper disable once UnusedMember.Global
         public ApiResponseMap<CryptocurrencyMetadata> MetadataBySlug(
-            string slug, string aux = MetadataDefaultAux)
+            string slug, string aux = null)
         {
             return Metadata(null, slug, null, aux);
         }
         // ReSharper disable once UnusedMember.Global
         public ApiResponseMap<CryptocurrencyMetadata> MetadataBySymbol(
-            string symbol, string aux = MetadataDefaultAux)
+            string symbol, string aux = null)
         {
             return Metadata(null, null, symbol, aux);
         }
@@ -56,7 +49,7 @@ namespace CoinMarketCap.Client
         /// <param name="aux"></param>
         /// <returns>A map of cryptocurrency objects by ID, symbol, or slug (as used in query parameters).</returns>
         public ApiResponseMap<CryptocurrencyMetadata> Metadata(
-            string id = null, string slug = null, string symbol = null, string aux = MetadataDefaultAux)
+            string id = null, string slug = null, string symbol = null, string aux = null)
         {
             if (string.IsNullOrWhiteSpace(id) &&
                 string.IsNullOrWhiteSpace(slug) &&
@@ -66,38 +59,14 @@ namespace CoinMarketCap.Client
                     nameof(id));
             }
 
-            var url = new UriBuilder("https://pro-api.coinmarketcap.com/v1/cryptocurrency/info");
-
-            var queryString = HttpUtility.ParseQueryString(string.Empty);
-            if (!string.IsNullOrWhiteSpace(id))
-            {
-                queryString["id"] = id;
-            }
-            if (!string.IsNullOrWhiteSpace(slug))
-            {
-                queryString["slug"] = slug;
-            }
-            if (!string.IsNullOrWhiteSpace(symbol))
-            {
-                queryString["symbol"] = symbol;
-            }
-            if (!string.IsNullOrWhiteSpace(aux) &&
-                !aux.Equals(MetadataDefaultAux))
-            {
-                queryString["aux"] = aux;
-            }
-
-            url.Query = queryString.ToString();
-
-            string responseJson;
-            using (var client = new WebClient())
-            {
-                client.Headers.Add("X-CMC_PRO_API_KEY", ApiKey);
-                client.Headers.Add("Accepts", "application/json");
-                responseJson = client.DownloadString(url.ToString());
-            }
-
-            return JsonConvert.DeserializeObject<ApiResponseMap<CryptocurrencyMetadata>>(responseJson);
+            return ApiRequest<ApiResponseMap<CryptocurrencyMetadata>>("cryptocurrency/info",
+                new Dictionary<string, string>
+                {
+                    ["id"] = id,
+                    ["slug"] = slug,
+                    ["symbol"] = symbol,
+                    ["aux"] = aux
+                });
         }
 
         #endregion Endpoint: /v1/cryptocurrency/info - Metadata
@@ -137,96 +106,28 @@ namespace CoinMarketCap.Client
             string sort = "market_cap", string sortDir = null,
             string cryptocurrencyType = null, string aux = null)
         {
-            var url = new UriBuilder("https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest");
-
-            var queryString = HttpUtility.ParseQueryString(string.Empty);
-
-            if (start.HasValue)
-            {
-                queryString["start"] = start.Value.ToString();
-            }
-            if (limit.HasValue)
-            {
-                queryString["limit"] = limit.Value.ToString();
-            }
-            if (priceMin.HasValue)
-            {
-                queryString["price_min"] = priceMin.Value.ToString();
-            }
-            if (priceMax.HasValue)
-            {
-                queryString["price_max"] = priceMax.Value.ToString();
-            }
-            if (marketCapMin.HasValue)
-            {
-                queryString["market_cap_min"] = marketCapMin.Value.ToString();
-            }
-            if (marketCapMax.HasValue)
-            {
-                queryString["market_cap_max"] = marketCapMax.Value.ToString();
-            }
-            if (volume24HMin.HasValue)
-            {
-                queryString["volume_24h_min"] = volume24HMin.Value.ToString();
-            }
-            if (volume24HMax.HasValue)
-            {
-                queryString["volume_24h_max"] = volume24HMax.Value.ToString();
-            }
-            if (circulatingSupplyMin.HasValue)
-            {
-                queryString["circulating_supply_min"] = circulatingSupplyMin.Value.ToString();
-            }
-            if (circulatingSupplyMax.HasValue)
-            {
-                queryString["circulating_supply_max"] = circulatingSupplyMax.Value.ToString();
-            }
-            if (percentChange24HMin.HasValue)
-            {
-                queryString["percent_change_24h_min"] = percentChange24HMin.Value.ToString(CultureInfo.InvariantCulture);
-            }
-            if (percentChange24HMax.HasValue)
-            {
-                queryString["percent_change_24h_max"] = percentChange24HMax.Value.ToString(CultureInfo.InvariantCulture);
-            }
-            if (!string.IsNullOrWhiteSpace(convert))
-            {
-                queryString["convert"] = convert;
-            }
-            if (!string.IsNullOrWhiteSpace(convertId))
-            {
-                queryString["convert_id"] = convertId;
-            }
-            if (!string.IsNullOrWhiteSpace(sort))
-            {
-                queryString["sort"] = sort;
-            }
-            if (!string.IsNullOrWhiteSpace(sortDir))
-            {
-                queryString["sort_dir"] = sortDir;
-            }
-            if (!string.IsNullOrWhiteSpace(cryptocurrencyType))
-            {
-                queryString["cryptocurrency_type"] = cryptocurrencyType;
-            }
-
-            if (!string.IsNullOrWhiteSpace(aux) &&
-                !aux.Equals(QuotesLatestDefaultAux))
-            {
-                queryString["aux"] = aux;
-            }
-
-            url.Query = queryString.ToString();
-
-            string responseJson;
-            using (var client = new WebClient())
-            {
-                client.Headers.Add("X-CMC_PRO_API_KEY", ApiKey);
-                client.Headers.Add("Accepts", "application/json");
-                responseJson = client.DownloadString(url.ToString());
-            }
-
-            return JsonConvert.DeserializeObject<ApiResponseList<Cryptocurrency>>(responseJson);
+            return ApiRequest<ApiResponseList<Cryptocurrency>>("cryptocurrency/listings/latest",
+                new Dictionary<string, string>
+                {
+                    ["start"] = start?.ToString(),
+                    ["limit"] = limit?.ToString(),
+                    ["price_min"] = priceMin?.ToString(),
+                    ["price_max"] = priceMax?.ToString(),
+                    ["market_cap_min"] = marketCapMin?.ToString(),
+                    ["market_cap_max"] = marketCapMax?.ToString(),
+                    ["volume_24h_min"] = volume24HMin?.ToString(),
+                    ["volume_24h_max"] = volume24HMax?.ToString(),
+                    ["circulating_supply_min"] = circulatingSupplyMin?.ToString(),
+                    ["circulating_supply_max"] = circulatingSupplyMax?.ToString(),
+                    ["percent_change_24h_min"] = percentChange24HMin?.ToString(CultureInfo.InvariantCulture),
+                    ["percent_change_24h_max"] = percentChange24HMax?.ToString(CultureInfo.InvariantCulture),
+                    ["convert"] = convert,
+                    ["convert_id"] = convertId,
+                    ["sort"] = sort,
+                    ["sort_dir"] = sortDir,
+                    ["cryptocurrency_type"] = sortDir,
+                    ["aux"] = aux
+                });
         }
 
         #endregion Endpoint: /v1/cryptocurrency/listings/latest - Latest listings
@@ -244,7 +145,7 @@ namespace CoinMarketCap.Client
         /// <returns></returns>
         public ApiResponseMap<Cryptocurrency> QuotesLatestById(
             string id, string convert = null, string convertId = null,
-            string aux = QuotesLatestDefaultAux, bool skipInvalid = false)
+            string aux = null, bool skipInvalid = false)
         {
             return QuotesLatest(id, null, null, convert, convertId, aux, skipInvalid);
         }
@@ -260,7 +161,7 @@ namespace CoinMarketCap.Client
         /// <returns></returns>
         public ApiResponseMap<Cryptocurrency> QuotesLatestBySlug(
             string slug, string convert = null, string convertId = null,
-            string aux = QuotesLatestDefaultAux, bool skipInvalid = false)
+            string aux = null, bool skipInvalid = false)
         {
             return QuotesLatest(null, slug, null, convert, convertId, aux, skipInvalid);
         }
@@ -276,7 +177,7 @@ namespace CoinMarketCap.Client
         /// <returns></returns>
         public ApiResponseMap<Cryptocurrency> QuotesLatestBySymbol(
             string symbol, string convert = null, string convertId = null,
-            string aux = QuotesLatestDefaultAux, bool skipInvalid = false)
+            string aux = null, bool skipInvalid = false)
         {
             return QuotesLatest(null, null, symbol, convert, convertId, aux, skipInvalid);
         }
@@ -296,7 +197,7 @@ namespace CoinMarketCap.Client
         /// <returns>A map of cryptocurrency objects by ID, symbol, or slug (as used in query parameters).</returns>
         public ApiResponseMap<Cryptocurrency> QuotesLatest(
             string id = null, string slug = null, string symbol = null,
-            string convert = null, string convertId = null, string aux = QuotesLatestDefaultAux,
+            string convert = null, string convertId = null, string aux = null,
             bool skipInvalid = false)
         {
             if (string.IsNullOrWhiteSpace(id) &&
@@ -307,50 +208,17 @@ namespace CoinMarketCap.Client
                     nameof(id));
             }
 
-            var url = new UriBuilder("https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest");
-
-            var queryString = HttpUtility.ParseQueryString(string.Empty);
-            if (!string.IsNullOrWhiteSpace(id))
-            {
-                queryString["id"] = id;
-            }
-            if (!string.IsNullOrWhiteSpace(slug))
-            {
-                queryString["slug"] = slug;
-            }
-            if (!string.IsNullOrWhiteSpace(symbol))
-            {
-                queryString["symbol"] = symbol;
-            }
-            if (!string.IsNullOrWhiteSpace(convert))
-            {
-                queryString["convert"] = convert;
-            }
-            if (!string.IsNullOrWhiteSpace(convertId))
-            {
-                queryString["convert_id"] = convertId;
-            }
-            if (!string.IsNullOrWhiteSpace(aux) &&
-                !aux.Equals(QuotesLatestDefaultAux))
-            {
-                queryString["aux"] = aux;
-            }
-            if (skipInvalid)
-            {
-                queryString["skip_invalid"] = "true";
-            }
-
-            url.Query = queryString.ToString();
-
-            string responseJson;
-            using (var client = new WebClient())
-            {
-                client.Headers.Add("X-CMC_PRO_API_KEY", ApiKey);
-                client.Headers.Add("Accepts", "application/json");
-                responseJson = client.DownloadString(url.ToString());
-            }
-
-            return JsonConvert.DeserializeObject<ApiResponseMap<Cryptocurrency>>(responseJson);
+            return ApiRequest<ApiResponseMap<Cryptocurrency>>("cryptocurrency/quotes/latest",
+                new Dictionary<string, string>
+                {
+                    ["id"] = id,
+                    ["slug"] = slug,
+                    ["symbol"] = symbol,
+                    ["convert"] = convert,
+                    ["convert_id"] = convertId,
+                    ["aux"] = aux,
+                    ["skip_invalid"] = "true"
+                });
         }
 
         #endregion Endpoint: /v1/cryptocurrency/quotes/latest - Latest quotes
