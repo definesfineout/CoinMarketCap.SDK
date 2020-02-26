@@ -96,6 +96,7 @@ namespace CoinMarketCap.DataContracts
         /// </summary>
         [DataMember(Name = "quote")]
         public Dictionary<string, Quote> Quote { get; set; }
+
     }
 
     /// <summary>
@@ -182,5 +183,8 @@ namespace CoinMarketCap.DataContracts
         /// </summary>
         [DataMember(Name = "last_updated")]
         public string LastUpdated { get; set; }
+
     }
+
+    
 }

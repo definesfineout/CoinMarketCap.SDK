@@ -237,7 +237,7 @@ namespace CoinMarketCap.Client
         /// <param name="convertId"></param>
         /// <param name="aux"></param>
         /// <returns></returns>
-        public ApiResponse<CryptocurrencytHistoricalData> QuotesHistoricalById(
+        public ApiResponse<CryptocurrencyHistoricalData> QuotesHistoricalById(
             string id, DateTime? time_start = null,
             DateTime? time_end = null, int? count = null, string interval = null, string convert = null,
             string convertId = null, string aux = null)
@@ -257,7 +257,7 @@ namespace CoinMarketCap.Client
         /// <param name="convertId"></param>
         /// <param name="aux"></param>
         /// <returns></returns>
-        public ApiResponse<CryptocurrencytHistoricalData> QuotesHistoricalBySymbol(
+        public ApiResponse<CryptocurrencyHistoricalData> QuotesHistoricalBySymbol(
            string symbol, DateTime? time_start = null, DateTime? time_end = null,
            int? count = null, string interval = null, string convert = null,
            string convertId = null, string aux = null)
@@ -279,7 +279,7 @@ namespace CoinMarketCap.Client
         /// <param name="convertId"></param>
         /// <param name="aux"></param>
         /// <returns>Results of your query returned as an object map.</returns>
-        public ApiResponse<CryptocurrencytHistoricalData> QuotesHistorical(
+        public ApiResponse<CryptocurrencyHistoricalData> QuotesHistorical(
             string id = null, string symbol = null, DateTime? time_start = null,
             DateTime? time_end = null, int? count = 2, string interval = null, string convert = null,
             string convertId = null, string aux = null)
@@ -304,7 +304,7 @@ namespace CoinMarketCap.Client
             }
             //
 
-            return ApiRequest<ApiResponse<CryptocurrencytHistoricalData>>("cryptocurrency/quotes/historical",
+            return ApiRequest<ApiResponse<CryptocurrencyHistoricalData>>("cryptocurrency/quotes/historical",
                 new Dictionary<string, string>
                 {
                     ["id"] = id,
