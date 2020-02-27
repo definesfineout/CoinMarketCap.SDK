@@ -8,11 +8,39 @@ namespace CoinMarketCap.Client
     // ReSharper disable once UnusedMember.Global
     public class CryptocurrencyClient : ApiClientBase
     {
-        //TODO: ApiClientBase with initialization and shared members
-
         #region Endpoint: /v1/cryptocurrency/map - CoinMarketCap ID map
 
-        //TODO: Cryptocurrency Endpoint: Map
+        /// <summary>
+        /// Returns a mapping of all cryptocurrencies to unique CoinMarketCap IDs.
+        /// <remarks>See https://coinmarketcap.com/api/documentation/v1/#operation/getV1CryptocurrencyMap </remarks>
+        /// </summary>
+        /// <param name="listingStatus"></param>
+        /// <param name="start"></param>
+        /// <param name="limit"></param>
+        /// <param name="sort"></param>
+        /// <param name="symbol"></param>
+        /// <param name="aux"></param>
+        /// <returns></returns>
+        public ApiResponseList<CryptocurrencyIdMapping> Map(string listingStatus = null, int? start = null,
+            int? limit = null, string sort = null, string symbol = null, string aux = null)
+        {
+            if (start.HasValue && start < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(start), start.Value,
+                    $"{nameof(start)} must be greater than or equal to 1.");
+            }
+
+            return ApiRequest<ApiResponseList<CryptocurrencyIdMapping>>("cryptocurrency/map",
+                new Dictionary<string, string>
+                {
+                    ["listing_status"] = listingStatus,
+                    ["start"] = start.HasValue ? start.ToString() : string.Empty,
+                    ["limit"] = limit.HasValue ? limit.ToString() : string.Empty,
+                    ["sort"] = sort,
+                    ["symbol"] = symbol,
+                    ["aux"] = aux
+                });
+        }
 
         #endregion Endpoint: /v1/cryptocurrency/map - CoinMarketCap ID map
 
