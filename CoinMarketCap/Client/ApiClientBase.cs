@@ -16,7 +16,7 @@ namespace CoinMarketCap.Client
             ConfigurationManager.AppSettings["CoinMarketCap"]?.ToLowerInvariant().Equals("true") ?? false;
 
         private const string ApiBaseUrlPro = "https://pro-api.coinmarketcap.com/v1/";
-        private const string ApiBaseUrlSandbox = "https://pro-api.coinmarketcap.com/v1/";
+        private const string ApiBaseUrlSandbox = "https://sandbox-api.coinmarketcap.com/v1/";
 
         private string ApiBaseUrl =>
             _sandbox
@@ -24,7 +24,8 @@ namespace CoinMarketCap.Client
                 : ApiBaseUrlPro;
 
         protected T ApiRequest<T>(string endpoint, Dictionary<string, string> parameters)
-        {
+        {           
+
             var url = new UriBuilder($"{ApiBaseUrl}{endpoint}");
 
             var queryString = HttpUtility.ParseQueryString(string.Empty);
@@ -42,7 +43,7 @@ namespace CoinMarketCap.Client
                 client.Headers.Add("Accepts", "application/json");
                 responseJson = client.DownloadString(url.ToString());
             }
-
+            
             return JsonConvert.DeserializeObject<T>(responseJson);
         }
     }

@@ -55,7 +55,7 @@ namespace CoinMarketCapDemo
             Console.WriteLine("\t[3] Listings Latest");
             Console.WriteLine("\t[4] [TODO] Listings Historical");
             Console.WriteLine("\t[5] Quotes Latest");
-            Console.WriteLine("\t[6] [TODO] Quotes Historical");
+            Console.WriteLine("\t[6] Quotes Historical");
             Console.WriteLine("\t[7] [TODO] Market Pairs Latest");
             Console.WriteLine("\t[8] [TODO] OHLCV Latest");
             Console.WriteLine("\t[9] [TODO] OHLCV Historical");
@@ -66,7 +66,6 @@ namespace CoinMarketCapDemo
             {
                 case "1":
                 case "4":
-                case "6":
                 case "7":
                 case "8":
                 case "9":
@@ -81,6 +80,9 @@ namespace CoinMarketCapDemo
                     return true;
                 case "5":
                     CryptocurrencyQuotesLatest();
+                    return true;
+                case "6":
+                    CryptocurrencyQuotesHistorical();
                     return true;
                 case "x":
                     return false;
@@ -117,6 +119,36 @@ namespace CoinMarketCapDemo
 
             var client = new CryptocurrencyClient();
             var response = client.QuotesLatestBySymbol(symbol);
+            var json = JsonConvert.SerializeObject(response, Formatting.Indented);
+
+            ShowResponseAndWait(json);
+        }
+
+        private static void CryptocurrencyQuotesHistorical()
+        {
+            Console.WriteLine("\nEnter symbol: ");
+            var symbol = Console.ReadLine();
+
+            Console.WriteLine("\nEnter start date: ");
+            var startDate = new DateTime();
+
+            while (!DateTime.TryParse(Console.ReadLine(), out startDate))
+            {
+                Console.WriteLine($"\nSorry, {startDate} is not a valid date.\nPlease enter a date using the format YYYY-MM-DD");
+                Console.WriteLine("\nEnter start date: ");
+            }
+
+            Console.WriteLine("\nEnter end date: ");
+            var endDate = new DateTime();
+
+            while (!DateTime.TryParse(Console.ReadLine(), out endDate))
+            {
+                Console.WriteLine($"\nSorry, {endDate} is not a valid date.\nPlease enter a date using the format YYYY-MM-DD");
+                Console.WriteLine("\nEnter end date: ");
+            }
+
+            var client = new CryptocurrencyClient();
+            var response = client.QuotesHistoricalBySymbol(symbol, startDate, endDate);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
             ShowResponseAndWait(json);
