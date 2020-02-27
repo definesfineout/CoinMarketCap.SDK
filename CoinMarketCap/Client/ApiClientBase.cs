@@ -13,7 +13,7 @@ namespace CoinMarketCap.Client
         private readonly string _apiKey = ConfigurationManager.AppSettings["CoinMarketCap.ApiKey"];
 
         private readonly bool _sandbox =
-            ConfigurationManager.AppSettings["CoinMarketCap"]?.ToLowerInvariant().Equals("true") ?? false;
+            ConfigurationManager.AppSettings["CoinMarketCap.Sandbox"]?.ToLowerInvariant().Equals("true") ?? false;
 
         private const string ApiBaseUrlPro = "https://pro-api.coinmarketcap.com/v1/";
         private const string ApiBaseUrlSandbox = "https://sandbox-api.coinmarketcap.com/v1/";
