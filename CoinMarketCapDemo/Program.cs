@@ -129,9 +129,23 @@ namespace CoinMarketCapDemo
             Console.WriteLine("\nEnter symbol: ");
             var symbol = Console.ReadLine();
 
-            //seed date interval that conforms with test-env parameters
-            var startDate = new DateTime(2019, 08, 01, 00, 04, 01);
-            var endDate = new DateTime(2019, 08, 30, 18, 49, 02);
+            Console.WriteLine("\nEnter start date: ");
+            var startDate = new DateTime();
+
+            while (!DateTime.TryParse(Console.ReadLine(), out startDate))
+            {
+                Console.WriteLine($"\nSorry, {startDate} is not a valid date.\nPlease enter a date using the format YYYY-MM-DD");
+                Console.WriteLine("\nEnter start date: ");
+            }
+
+            Console.WriteLine("\nEnter end date: ");
+            var endDate = new DateTime();
+
+            while (!DateTime.TryParse(Console.ReadLine(), out endDate))
+            {
+                Console.WriteLine($"\nSorry, {endDate} is not a valid date.\nPlease enter a date using the format YYYY-MM-DD");
+                Console.WriteLine("\nEnter end date: ");
+            }
 
             var client = new CryptocurrencyClient();
             var response = client.QuotesHistoricalBySymbol(symbol, startDate, endDate);
