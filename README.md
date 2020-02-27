@@ -12,11 +12,14 @@ Add your [CoinMarketCap API](https://coinmarketcap.com/api/) key to your applica
 <configuration>
   <appSettings>
     <add key="CoinMarketCap.ApiKey" value="YOUR API KEY HERE"/>
+    <add key="CoinMarketCap.Sandbox" value="true"/>
   </appSettings>
 </configuration>
 ```
 
-Then, simply new up a client for your desired endpoint and call any of the endpoint's methods:
+The `CoinMarketCap.Sandbox` setting specifies whether to use the `sandbox-api.coinmarketcap.com` host, instead of the default `pro-api.coinmarketcap.com`.
+
+Now, simply new up a client for your desired endpoint category and call any of the client's methods:
 
 ```c#
 using CoinMarketCap;
@@ -25,7 +28,12 @@ var client = new CryptocurrencyClient();
 var response = client.Metadata("XTZ");
 ```
 
+## Demo Application
+
+There is a `CoinMarketCapDemo` console application project included in the solution's `Demo` folder. This demo presents interactive, menu-driven examples of each API endpoint method implemented in the SDK. Be sure to add your API key to `CoinMarketCapDemo/App.config` before building and running or debugging.
+
 ## Contribute
+
 You are welcome to fork and send pull requests. Code reviews and suggestions are always appreciated!
 
 * [How To: Fork a GitHub Repository & Submit a Pull Request](https://jarv.is/notes/how-to-pull-request-fork-github/)
