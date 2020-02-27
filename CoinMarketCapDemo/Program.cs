@@ -50,7 +50,7 @@ namespace CoinMarketCapDemo
         private static bool CryptocurrencyMenu()
         {
             Console.WriteLine("\nSelect Cryptocurrency Endpoint:\n");
-            Console.WriteLine("\t[1] [TODO] Map");
+            Console.WriteLine("\t[1] Map");
             Console.WriteLine("\t[2] Metadata");
             Console.WriteLine("\t[3] Listings Latest");
             Console.WriteLine("\t[4] [TODO] Listings Historical");
@@ -64,7 +64,6 @@ namespace CoinMarketCapDemo
             var input = Console.ReadLine();
             switch (input?.Trim().ToLowerInvariant() ?? string.Empty)
             {
-                case "1":
                 case "4":
                 case "7":
                 case "8":
@@ -72,6 +71,7 @@ namespace CoinMarketCapDemo
                 case "0":
                     Console.WriteLine("\nComing soon...");
                     return true;
+                case "1":
                 case "2":
                     CryptocurrencyMetadata();
                     return true;
@@ -89,6 +89,18 @@ namespace CoinMarketCapDemo
             }
             Console.WriteLine("\nDo what now?");
             return true;
+        }
+
+        private static void CryptocurrencyMap()
+        {
+            Console.WriteLine("\nEnter symbol (separate with comma): ");
+            var symbol = Console.ReadLine();
+
+            var client = new CryptocurrencyClient();
+            var response = client.Map(null, 1, 10, null, symbol);
+            var json = JsonConvert.SerializeObject(response, Formatting.Indented);
+
+            ShowResponseAndWait(json);
         }
 
         private static void CryptocurrencyMetadata()
