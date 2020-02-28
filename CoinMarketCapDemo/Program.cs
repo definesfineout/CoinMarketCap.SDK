@@ -53,7 +53,7 @@ namespace CoinMarketCapDemo
             Console.WriteLine("\t[1] Map");
             Console.WriteLine("\t[2] Metadata");
             Console.WriteLine("\t[3] Listings Latest");
-            Console.WriteLine("\t[4] [TODO] Listings Historical");
+            Console.WriteLine("\t[4] Listings Historical");
             Console.WriteLine("\t[5] Quotes Latest");
             Console.WriteLine("\t[6] Quotes Historical");
             Console.WriteLine("\t[7] [TODO] Market Pairs Latest");
@@ -64,7 +64,6 @@ namespace CoinMarketCapDemo
             var input = Console.ReadLine();
             switch (input?.Trim().ToLowerInvariant() ?? string.Empty)
             {
-                case "4":
                 case "7":
                 case "8":
                 case "9":
@@ -77,6 +76,9 @@ namespace CoinMarketCapDemo
                     return true;
                 case "3":
                     CryptocurrencyListingsLatest();
+                    return true;
+                case "4":
+                    CryptocurrencyListingsHistorical();
                     return true;
                 case "5":
                     CryptocurrencyQuotesLatest();
@@ -119,6 +121,24 @@ namespace CoinMarketCapDemo
         {
             var client = new CryptocurrencyClient();
             var response = client.ListingsLatest(1, 10);
+            var json = JsonConvert.SerializeObject(response, Formatting.Indented);
+
+            ShowResponseAndWait(json);
+        }
+
+        private static void CryptocurrencyListingsHistorical()
+        {
+            Console.WriteLine("\nEnter date: ");
+            var date = new DateTime();
+
+            while (!DateTime.TryParse(Console.ReadLine(), out date))
+            {
+                Console.WriteLine($"\nSorry, {date} is not a valid date.\nPlease enter a date using the format YYYY-MM-DD");
+                Console.WriteLine("\nEnter start date: ");
+            }
+
+            var client = new CryptocurrencyClient();
+            var response = client.ListingsHistorical(date);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
             ShowResponseAndWait(json);
