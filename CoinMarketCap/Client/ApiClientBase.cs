@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -23,9 +24,8 @@ namespace CoinMarketCap.Client
                 ? ApiBaseUrlSandbox
                 : ApiBaseUrlPro;
 
-        protected T ApiRequest<T>(string endpoint, Dictionary<string, string> parameters)
+        protected T ApiRequest<T>(string endpoint, Dictionary<string, string> parameters) where T : class
         {           
-
             var url = new UriBuilder($"{ApiBaseUrl}{endpoint}");
 
             var queryString = HttpUtility.ParseQueryString(string.Empty);
@@ -41,10 +41,37 @@ namespace CoinMarketCap.Client
             {
                 client.Headers.Add("X-CMC_PRO_API_KEY", _apiKey);
                 client.Headers.Add("Accepts", "application/json");
-                responseJson = client.DownloadString(url.ToString());
+
+                try
+                {
+                    responseJson = client.DownloadString(url.ToString());
+                }
+                catch (WebException ex)
+                {
+                    if (ex.Response == null)
+                    {
+                        throw;
+                    }
+                    using (var response = ex.Response)
+                    {
+                        var dataRs = response.GetResponseStream();
+                        if (dataRs == null)
+                        {
+                            throw;
+                        }
+
+                        using (var reader = new StreamReader(dataRs))
+                        {
+                            responseJson = reader.ReadToEnd();
+                        }
+                    }
+                }
             }
             
-            return JsonConvert.DeserializeObject<T>(responseJson);
+            return 
+                string.IsNullOrWhiteSpace(responseJson)
+                ? null
+                : JsonConvert.DeserializeObject<T>(responseJson);;
         }
     }
 }
