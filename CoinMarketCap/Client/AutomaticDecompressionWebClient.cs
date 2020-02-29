@@ -19,7 +19,7 @@ namespace CoinMarketCap.Client
         public AutomaticDecompressionWebClient()
             : base()
         {
-            Headers["Accept-Encoding"] = "deflate, gzip";
+            Headers[HttpRequestHeader.AcceptEncoding] = "deflate, gzip";
         }
     }
 }

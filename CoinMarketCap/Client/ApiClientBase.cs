@@ -40,7 +40,7 @@ namespace CoinMarketCap.Client
             using (var client = new AutomaticDecompressionWebClient())
             {
                 client.Headers.Add("X-CMC_PRO_API_KEY", _apiKey);
-                client.Headers.Add("Accepts", "application/json");
+                client.Headers.Add(HttpRequestHeader.Accept, "application/json");
 
                 try
                 {
