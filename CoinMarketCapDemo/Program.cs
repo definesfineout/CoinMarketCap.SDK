@@ -53,7 +53,7 @@ namespace CoinMarketCapDemo
             Console.WriteLine("\t[1] Map");
             Console.WriteLine("\t[2] Metadata");
             Console.WriteLine("\t[3] Listings Latest");
-            Console.WriteLine("\t[4] [TODO] Listings Historical");
+            Console.WriteLine("\t[4] Listings Historical");
             Console.WriteLine("\t[5] Quotes Latest");
             Console.WriteLine("\t[6] Quotes Historical");
             Console.WriteLine("\t[7] Market Pairs Latest");
@@ -64,18 +64,22 @@ namespace CoinMarketCapDemo
             var input = Console.ReadLine();
             switch (input?.Trim().ToLowerInvariant() ?? string.Empty)
             {
-                case "4":
                 case "8":
                 case "9":
                 case "0":
                     Console.WriteLine("\nComing soon...");
                     return true;
                 case "1":
+                    CryptocurrencyMap();
+                    return true;
                 case "2":
                     CryptocurrencyMetadata();
                     return true;
                 case "3":
                     CryptocurrencyListingsLatest();
+                    return true;
+                case "4":
+                    CryptocurrencyListingsHistorical();
                     return true;
                 case "5":
                     CryptocurrencyQuotesLatest();
@@ -121,6 +125,22 @@ namespace CoinMarketCapDemo
         {
             var client = new CryptocurrencyClient();
             var response = client.ListingsLatest(1, 10);
+            var json = JsonConvert.SerializeObject(response, Formatting.Indented);
+
+            ShowResponseAndWait(json);
+        }
+
+        private static void CryptocurrencyListingsHistorical()
+        {
+            Console.WriteLine("\nEnter date (YYYY-MM-DD):");
+            DateTime date;
+            while (!DateTime.TryParse(Console.ReadLine(), out date))
+            {
+                Console.WriteLine("\nInvalid date. Please enter a date using the format YYYY-MM-DD\nEnter start date: ");
+            }
+
+            var client = new CryptocurrencyClient();
+            var response = client.ListingsHistorical(date, 1, 1);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
             ShowResponseAndWait(json);
