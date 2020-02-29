@@ -495,7 +495,9 @@ namespace CoinMarketCap.Client
                 });
 
         }
+
         #endregion Endpoint: /v1/cryptopcurrency/quotes/historical - Historical Quotes
+
 
         #region Endpoint: /v1/cryptocurrency/market-pairs/latest - Market Pairs Latest
 
@@ -738,6 +740,93 @@ namespace CoinMarketCap.Client
                     ["convert_id"] = convertId
                 });
         }
+
         #endregion Endpoint: /v1/cryptocurrency/market-pairs/latest - Market Pairs Latest
+
+        #region Endpoint: /v1/cryptocurrency/ohlcv/latest - Latest OHLCV
+
+        public ApiResponseMap<CryptocurrencyOhlcvQuotes> OhlcvLatestById(
+            string id, string convert = null, string convertId = null, bool? skipInvalid = null)
+        {
+            return OhlcvLatest(id, null, convert, convertId, skipInvalid);
+        }
+
+        // ReSharper disable once UnusedMember.Global
+        public ApiResponseMap<CryptocurrencyOhlcvQuotes> OhlcvLatestBySymbol(
+            string symbol, string convert = null, string convertId = null, bool? skipInvalid = null)
+        {
+            return OhlcvLatest(null, symbol, convert, convertId, skipInvalid);
+        }
+
+        /// <summary>
+        /// Returns the latest OHLCV (Open, High, Low, Close, Volume) market values for one or more
+        /// cryptocurrencies for the current UTC day. Since the current UTC day is still active these values
+        /// are updated frequently. You can find the final calculated OHLCV values for the last completed UTC
+        /// day along with all historic days using <see cref="OhlcvHistorical"/>.
+        /// </summary>
+        /// <param name="id">
+        /// One or more comma-separated cryptocurrency CoinMarketCap IDs.
+        /// Example: <value>a,2</value>
+        /// </param>
+        /// <param name="symbol">
+        /// Alternatively pass one or more comma-separated cryptocurrency symbols. Example: <value>BTC,ETH</value>.
+        /// At least one of <see cref="id"/> or <see cref="symbol"/> is required
+        /// </param>
+        /// <param name="convert">
+        /// Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated
+        /// list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first
+        /// requires an additional call credit. A list of supported fiat options can be found at
+        /// https://coinmarketcap.com/api/documentation/v1/#section/Standards-and-Conventions
+        /// Each conversion is returned in its own <see cref="OhlcvQuote"/> object.
+        /// </param>
+        /// <param name="convertId">
+        /// Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is
+        /// identical to <see cref="convert"/>outside of ID format. Ex: <value>convert_id=1,2781</value>
+        /// would replace <value>convert=BTC,USD</value> in your query. This parameter cannot be used when
+        /// <see cref="convert"/> is used.
+        /// </param>
+        /// <param name="skipInvalid">
+        /// Pass <value>true</value> to relax request validation rules. When requesting records on multiple
+        /// cryptocurrencies an error is returned if any invalid cryptocurrencies are requested or a
+        /// cryptocurrency does not have matching records in the requested timeframe. If set to true, invalid
+        /// lookups will be skipped allowing valid cryptocurrencies to still be returned.
+        /// </param>
+        /// <returns>Latest OHLCV (Open, High, Low, Close, Volume) market values for the specified cryptocurrencies.</returns>
+        public ApiResponseMap<CryptocurrencyOhlcvQuotes> OhlcvLatest(
+            string id = null, string symbol = null, string convert = null, string convertId = null,
+            bool? skipInvalid = null)
+        {
+            if (string.IsNullOrWhiteSpace(id) &&
+                string.IsNullOrWhiteSpace(symbol))
+            {
+                throw new ArgumentException($"Must specify one of: {nameof(id)}, or {nameof(symbol)}",
+                    nameof(id));
+            }
+
+            return ApiRequest<ApiResponseMap<CryptocurrencyOhlcvQuotes>>("cryptocurrency/ohlcv/latest",
+                new Dictionary<string, string>
+                {
+                    ["id"] = id,
+                    ["symbol"] = symbol,
+                    ["convert"] = convert,
+                    ["convert_id"] = convertId,
+                    ["skip_invalid"] = skipInvalid.HasValue && skipInvalid.Value ? "true" : string.Empty
+                });
+        }
+
+        #endregion Endpoint: /v1/cryptocurrency/ohlcv/latest - Latest OHLCV
+
+        #region Endpoint: /v1/cryptocurrency/ohlcv/historical - Historical OHLCV
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ApiResponse<Object> OhlcvHistorical()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion Endpoint: /v1/cryptocurrency/ohlcv/historical - Historical OHLCV
     }
 }

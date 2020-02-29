@@ -57,14 +57,13 @@ namespace CoinMarketCapDemo
             Console.WriteLine("\t[5] Quotes Latest");
             Console.WriteLine("\t[6] Quotes Historical");
             Console.WriteLine("\t[7] Market Pairs Latest");
-            Console.WriteLine("\t[8] [TODO] OHLCV Latest");
+            Console.WriteLine("\t[8] OHLCV Latest");
             Console.WriteLine("\t[9] [TODO] OHLCV Historical");
             Console.WriteLine("\t[0] [TODO] Price Performance Stats Latest");
             Console.WriteLine("\t[x] Back to Main Menu");
             var input = Console.ReadLine();
             switch (input?.Trim().ToLowerInvariant() ?? string.Empty)
             {
-                case "8":
                 case "9":
                 case "0":
                     Console.WriteLine("\nComing soon...");
@@ -89,6 +88,9 @@ namespace CoinMarketCapDemo
                     return true;
                 case "7":
                     CryptocurrencyMarketPairsLatest();
+                    return true;
+                case "8":
+                    CryptocurrencyOhlcvLatest();
                     return true;
                 case "x":
                     return false;
@@ -153,6 +155,18 @@ namespace CoinMarketCapDemo
 
             var client = new CryptocurrencyClient();
             var response = client.QuotesLatestBySymbol(symbol);
+            var json = JsonConvert.SerializeObject(response, Formatting.Indented);
+
+            ShowResponseAndWait(json);
+        }
+
+        private static void CryptocurrencyOhlcvLatest()
+        {
+            Console.WriteLine("\nEnter symbol (separate by comma): ");
+            var symbol = Console.ReadLine();
+
+            var client = new CryptocurrencyClient();
+            var response = client.OhlcvLatestBySymbol(symbol);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
             ShowResponseAndWait(json);
