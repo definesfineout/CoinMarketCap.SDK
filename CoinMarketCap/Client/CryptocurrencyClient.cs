@@ -1,4 +1,5 @@
 ﻿using CoinMarketCap.DataContracts;
+using CoinMarketCap.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -22,7 +23,7 @@ namespace CoinMarketCap.Client
         /// <param name="aux"></param>
         /// <returns></returns>
         public ApiResponseList<CryptocurrencyIdMapping> Map(string listingStatus = null, int? start = null,
-            int? limit = null, string sort = null, string symbol = null, string aux = null)
+            int? limit = null, eSortCryptocurrencyMap? sort = null, string symbol = null, string aux = null)
         {
             if (start.HasValue && start < 1)
             {
@@ -34,9 +35,9 @@ namespace CoinMarketCap.Client
                 new Dictionary<string, string>
                 {
                     ["listing_status"] = listingStatus,
-                    ["start"] = start.HasValue ? start.ToString() : string.Empty,
-                    ["limit"] = limit.HasValue ? limit.ToString() : string.Empty,
-                    ["sort"] = sort,
+                    ["start"] = start?.ToString(),
+                    ["limit"] = limit?.ToString(),
+                    ["sort"] = sort?.GetDescription(),
                     ["symbol"] = symbol,
                     ["aux"] = aux
                 });
@@ -206,8 +207,8 @@ namespace CoinMarketCap.Client
             long? circulatingSupplyMin = null, long? circulatingSupplyMax = null,
             double? percentChange24HMin = null, double? percentChange24HMax = null,
             string convert = null, string convertId = null,
-            string sort = "market_cap", string sortDir = null,
-            string cryptocurrencyType = null, string aux = null)
+            eSortCryptocurrencyListingsLatest? sort = null, eSortDir? sortDir = null,
+            eCryptocurrencyType? cryptocurrencyType = null, string aux = null)
         {
             return ApiRequest<ApiResponseList<Cryptocurrency>>("cryptocurrency/listings/latest",
                 new Dictionary<string, string>
@@ -226,9 +227,9 @@ namespace CoinMarketCap.Client
                     ["percent_change_24h_max"] = percentChange24HMax?.ToString(CultureInfo.InvariantCulture),
                     ["convert"] = convert,
                     ["convert_id"] = convertId,
-                    ["sort"] = sort,
-                    ["sort_dir"] = sortDir,
-                    ["cryptocurrency_type"] = cryptocurrencyType,
+                    ["sort"] = sort?.GetDescription(),
+                    ["sort_dir"] = sortDir?.GetDescription(),
+                    ["cryptocurrency_type"] = cryptocurrencyType?.GetDescription(),
                     ["aux"] = aux
                 });
         }
@@ -296,8 +297,8 @@ namespace CoinMarketCap.Client
         public ApiResponseList<Cryptocurrency> ListingsHistorical(
             DateTime date, int? start = null, int? limit = null,
             string convert = null, string convertId = null,
-            string sort = null, string sortDir = null,
-            string cryptocurrencyType = null, string aux = null)
+            eSortCryptocurrencyListingsHistorical? sort = null, eSortDir? sortDir = null,
+            eCryptocurrencyType? cryptocurrencyType = null, string aux = null)
         {
             return ApiRequest<ApiResponseList<Cryptocurrency>>("cryptocurrency/listings/historical",
                 new Dictionary<string, string>
@@ -307,9 +308,9 @@ namespace CoinMarketCap.Client
                     ["limit"] = limit?.ToString(),
                     ["convert"] = convert,
                     ["convert_id"] = convertId,
-                    ["sort"] = sort,
-                    ["sort_dir"] = sortDir,
-                    ["cryptocurrency_type"] = cryptocurrencyType,
+                    ["sort"] = sort?.GetDescription(),
+                    ["sort_dir"] = sortDir?.GetDescription(),
+                    ["cryptocurrency_type"] = cryptocurrencyType?.GetDescription(),
                     ["aux"] = aux
                 });
         }
@@ -427,7 +428,7 @@ namespace CoinMarketCap.Client
         // ReSharper disable once UnusedMember.Global
         public ApiResponse<CryptocurrencyHistoricalData> QuotesHistoricalById(
             string id, DateTime? timeStart = null,
-            DateTime? timeEnd = null, int? count = null, string interval = null, string convert = null,
+            DateTime? timeEnd = null, int? count = null, eInterval? interval = null, string convert = null,
             string convertId = null, string aux = null)
         {
             return QuotesHistorical(id, null, timeStart, timeEnd, count, interval, convert, convertId, aux);
@@ -447,7 +448,7 @@ namespace CoinMarketCap.Client
         /// <returns></returns>
         public ApiResponse<CryptocurrencyHistoricalData> QuotesHistoricalBySymbol(
            string symbol, DateTime? timeStart = null, DateTime? timeEnd = null,
-           int? count = null, string interval = null, string convert = null,
+           int? count = null, eInterval? interval = null, string convert = null,
            string convertId = null, string aux = null)
         {
             return QuotesHistorical(null, symbol, timeStart, timeEnd, count, interval, convert, convertId, aux);
@@ -469,9 +470,8 @@ namespace CoinMarketCap.Client
         /// <returns>Results of your query returned as an object map.</returns>
         public ApiResponse<CryptocurrencyHistoricalData> QuotesHistorical(
             string id = null, string symbol = null, DateTime? timeStart = null,
-            DateTime? timeEnd = null, int? count = null, string interval = null, string convert = null,
-            string convertId = null, string aux = null)
-
+            DateTime? timeEnd = null, int? count = null, eInterval? interval = null,
+            string convert = null, string convertId = null, string aux = null)
         {
             if (string.IsNullOrWhiteSpace(id) &&
                 string.IsNullOrWhiteSpace(symbol))
@@ -485,19 +485,17 @@ namespace CoinMarketCap.Client
                 {
                     ["id"] = id,
                     ["symbol"] = symbol,
-                    ["time_start"] = timeStart.HasValue ? timeStart.Value.ToLongDateString() : string.Empty,
-                    ["time_end"] = timeEnd.HasValue ? timeEnd.Value.ToLongDateString() : string.Empty,
+                    ["time_start"] = timeStart?.ToString("yyyy-MM-dd"),
+                    ["time_end"] = timeEnd?.ToString("yyyy-MM-dd"),
                     ["count"] = count?.ToString(),
-                    ["interval"] = interval,
+                    ["interval"] = interval?.GetDescription(),
                     ["convert"] = convert,
                     ["convert_id"] = convertId,
                     ["aux"] = aux
                 });
-
         }
 
         #endregion Endpoint: /v1/cryptopcurrency/quotes/historical - Historical Quotes
-
 
         #region Endpoint: /v1/cryptocurrency/market-pairs/latest - Market Pairs Latest
 
@@ -546,9 +544,9 @@ namespace CoinMarketCap.Client
         /// query. This parameter cannot be used when <see cref="convert"/> is used.</param>
         /// <returns></returns>
         public ApiResponse<CryptocurrencyMarketPairs> MarketPairsLatestById(
-            string id, int? start = 1, int? limit = null, 
-            string sortDir = null,string sort = null, string aux = null, 
-            string matchedId = null, string matchedSymbol = null, 
+            string id, int? start = 1, int? limit = null,
+            eSortDir? sortDir = null, eSortCryptocurrencyMarketPairsLatest? sort = null, string aux = null,
+            string matchedId = null, string matchedSymbol = null,
             string convert = null, string convertId = null)
         {
             return MarketPairsLatest(id, null, null, start, limit, sortDir, sort, aux, matchedId, matchedSymbol, convert, convertId);
@@ -597,9 +595,10 @@ namespace CoinMarketCap.Client
         /// identical to <see cref="convert"/> outside of ID format. Ex: convert_id=1,2781 would replace convert=BTC,USD in your 
         /// query. This parameter cannot be used when <see cref="convert"/> is used.</param>
         /// <returns></returns>
+        // ReSharper disable once UnusedMember.Global
         public ApiResponse<CryptocurrencyMarketPairs> MarketPairsLatestBySlug(
             string slug, int? start = 1, int? limit = null,
-            string sortDir = null, string sort = null, string aux = null,
+            eSortDir? sortDir = null, eSortCryptocurrencyMarketPairsLatest? sort = null, string aux = null,
             string matchedId = null, string matchedSymbol = null,
             string convert = null, string convertId = null)
         {
@@ -653,65 +652,66 @@ namespace CoinMarketCap.Client
         /// <returns></returns>
         public ApiResponse<CryptocurrencyMarketPairs> MarketPairsLatestBySymbol(
             string symbol, int? start = 1, int? limit = null,
-            string sortDir = null, string sort = null, string aux = null,
+            eSortDir? sortDir = null, eSortCryptocurrencyMarketPairsLatest? sort = null, string aux = null,
             string matchedId = null, string matchedSymbol = null,
             string convert = null, string convertId = null)
         {
             return MarketPairsLatest(null, null, symbol, start, limit, sortDir, sort, aux, matchedId, matchedSymbol, convert, convertId);
         }
 
-        /// <summary>
-        /// Lists all active market pairs that CoinMarketCap tracks for a given cryptocurrency or fiat currency. All markets with this
-        /// currency as the pair base or pair quote will be returned. The latest price and volume information is returned for each
-        /// market. Use the <see cref="convert"/> option to return market values in multiple fiat and cryptocurrency conversions in the
-        /// same call.
-        /// <remarks>See https://coinmarketcap.com/api/documentation/v1/#operation/getV1CryptocurrencyMarketpairsLatest </remarks>
-        /// </summary>
-        /// <param name="id">A cryptocurrency or fiat currency by CoinMarketCap ID to list market pairs for. 
-        /// Example: <value>1</value></param>
-        /// <param name="start">Optionally offset the start (1-based index) of the paginated list of items to return.
-        ///     Default: <value>1</value>
-        ///     Valid values <value>&gt;= 1</value></param>
-        /// <param name="limit">Optionally specify the number of results to return. Use this parameter and the 
-        /// <see cref="start"/> parameter to determine your own pagination size.
-        ///     Default: <value>100</value>
-        ///     Valid values <value>[ 1 .. 5000 ]</value>
+        ///  <summary>
+        ///  Lists all active market pairs that CoinMarketCap tracks for a given cryptocurrency or fiat currency. All markets with this
+        ///  currency as the pair base or pair quote will be returned. The latest price and volume information is returned for each
+        ///  market. Use the <see cref="convert"/> option to return market values in multiple fiat and cryptocurrency conversions in the
+        ///  same call.
+        ///  <remarks>See https://coinmarketcap.com/api/documentation/v1/#operation/getV1CryptocurrencyMarketpairsLatest </remarks>
+        ///  </summary>
+        ///  <param name="id">A cryptocurrency or fiat currency by CoinMarketCap ID to list market pairs for. 
+        ///  Example: <value>1</value></param>
+        ///  <param name="symbol"></param>
+        ///  <param name="start">Optionally offset the start (1-based index) of the paginated list of items to return.
+        ///      Default: <value>1</value>
+        ///      Valid values <value>&gt;= 1</value></param>
+        ///  <param name="limit">Optionally specify the number of results to return. Use this parameter and the 
+        ///  <see cref="start"/> parameter to determine your own pagination size.
+        ///      Default: <value>100</value>
+        ///      Valid values <value>[ 1 .. 5000 ]</value>
+        ///  </param>
+        ///  <param name="sortDir">Optionally specify the sort direction of markets returned. 
+        ///      Default is <value>desc</value>.
+        ///  </param>
+        ///  <param name="sort">Optionally specify the sort order of markets returned. By default we return a strict sort on
+        ///  24 hour reported volume. Pass <value>cmc_rank</value> to return a CMC methodology based sort where markets 
+        ///  with excluded volumes are returned last.
+        ///      Default: <value>volume_24h_strict</value>
+        ///      Valid values: <value>volume_24h_strict</value>, <value>cmc_rank</value>
+        ///  </param>
+        ///  <param name="aux">Optionally specify a comma-separated list of supplemental data fields to return. 
+        ///  Pass <value>num_market_pairs, category, fee_type, market_url, currency_name, currency_slug, price_quote, 
+        ///  notice</value> to include all auxiliary fields.
+        ///      Default: <value>num_market_pairs</value>, <value>category</value>, <value>fee_type</value>
         /// </param>
-        /// <param name="sortDir">Optionally specify the sort direction of markets returned. 
-        ///     Default is <value>desc</value>.
-        /// </param>
-        /// <param name="sort">Optionally specify the sort order of markets returned. By default we return a strict sort on
-        /// 24 hour reported volume. Pass <value>cmc_rank</value> to return a CMC methodology based sort where markets 
-        /// with excluded volumes are returned last.
-        ///     Default: <value>volume_24h_strict</value>
-        ///     Valid values: <value>volume_24h_strict</value>, <value>cmc_rank</value>
-        /// </param>
-        /// <param name="aux">Optionally specify a comma-separated list of supplemental data fields to return. 
-        /// Pass <value>num_market_pairs, category, fee_type, market_url, currency_name, currency_slug, price_quote, 
-        /// notice</value> to include all auxiliary fields.
-        ///     Default: <value>num_market_pairs</value>, <value>category</value>, <value>fee_type</value>
-        ///</param>
-        /// <param name="matchedId">Optionally include one or more fiat or cryptocurrency IDs to filter market pairs by. 
-        /// For example: <value>?id=1&amp;matched_id=2781</value> would only return BTC markets that matched: 
-        /// <value>BTC/USD</value> or <value>USD/BTC</value>. This parameter cannot be used when <see cref="matchedSymbol"/> 
-        /// is used.</param>
-        /// <param name="matchedSymbol">Optionally include one or more fiat or cryptocurrency symbols to filter market pairs by. 
-        /// For example: <value>?symbol=BTC&amp;matched_symbol=USD</value> would only return BTC markets that matched: 
-        /// <value>BTC/USD</value> or <value>USD/BTC</value>. This parameter cannot be used when <see cref="matchedId"/> is used.
-        /// </param>
-        /// <param name="convert">Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated 
-        /// list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first requires an additional 
-        /// call credit. A list of supported fiat options can be found at 
-        /// https://sandbox.coinmarketcap.com/api/v1/#section/Standards-and-Conventions. 
-        /// Each conversion is returned in its own <value>quote</value> object.</param>
-        /// <param name="convertId">Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is 
-        /// identical to <see cref="convert"/> outside of ID format. Ex: convert_id=1,2781 would replace convert=BTC,USD in your 
-        /// query. This parameter cannot be used when <see cref="convert"/> is used.</param>
-        /// <returns>Results of your query returned as an object.</returns>
+        ///  <param name="matchedId">Optionally include one or more fiat or cryptocurrency IDs to filter market pairs by. 
+        ///  For example: <value>?id=1&amp;matched_id=2781</value> would only return BTC markets that matched: 
+        ///  <value>BTC/USD</value> or <value>USD/BTC</value>. This parameter cannot be used when <see cref="matchedSymbol"/> 
+        ///  is used.</param>
+        ///  <param name="matchedSymbol">Optionally include one or more fiat or cryptocurrency symbols to filter market pairs by. 
+        ///  For example: <value>?symbol=BTC&amp;matched_symbol=USD</value> would only return BTC markets that matched: 
+        ///  <value>BTC/USD</value> or <value>USD/BTC</value>. This parameter cannot be used when <see cref="matchedId"/> is used.
+        ///  </param>
+        ///  <param name="convert">Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated 
+        ///  list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first requires an additional 
+        ///  call credit. A list of supported fiat options can be found at 
+        ///  https://sandbox.coinmarketcap.com/api/v1/#section/Standards-and-Conventions. 
+        ///  Each conversion is returned in its own <value>quote</value> object.</param>
+        ///  <param name="convertId">Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is 
+        ///  identical to <see cref="convert"/> outside of ID format. Ex: convert_id=1,2781 would replace convert=BTC,USD in your 
+        ///  query. This parameter cannot be used when <see cref="convert"/> is used.</param>
+        ///  <returns>Results of your query returned as an object.</returns>
         public ApiResponse<CryptocurrencyMarketPairs> MarketPairsLatest(
-            string id = null, string slug = null, string symbol = null, 
-            int? start = 1, int? limit = null, string sortDir = null, 
-            string sort = null, string aux = null, string matchedId = null,
+            string id = null, string slug = null, string symbol = null,
+            int? start = 1, int? limit = null, eSortDir? sortDir = null,
+            eSortCryptocurrencyMarketPairsLatest? sort = null, string aux = null, string matchedId = null,
             string matchedSymbol = null, string convert = null,
             string convertId = null)
         {
@@ -731,8 +731,8 @@ namespace CoinMarketCap.Client
                     ["symbol"] = symbol,
                     ["start"] = start?.ToString(),
                     ["limit"] = limit?.ToString(),
-                    ["sort_dir"] = sortDir,
-                    ["sort"] = sort,
+                    ["sort_dir"] = sortDir.GetDescription(),
+                    ["sort"] = sort.GetDescription(),
                     ["aux"] = aux,
                     ["matched_id"] = matchedId,
                     ["matched_symbol"] = matchedSymbol,
