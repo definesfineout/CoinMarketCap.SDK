@@ -27,10 +27,11 @@ namespace CoinMarketCap.DataContracts
         public string Symbol { get; set; }
 
         /// <summary>
-        /// The number of active market pairs listed for this cryptocurrency. This number is filtered down to only matching markets if a matched parameter is used.
+        /// The number of active market pairs listed for this cryptocurrency. This number is filtered down to only matching markets if
+        /// a matched parameter is used.
         /// </summary>
         [DataMember(Name = "num_market_pairs")]
-        public int Num_Market_Pairs { get; set; }
+        public int NumMarketPairs { get; set; }
 
         /// <summary>
         /// Array of all market pairs for this cryptocurrency.
@@ -52,19 +53,21 @@ namespace CoinMarketCap.DataContracts
         public Exchange Exchange { get; set; }
 
         /// <summary>
-        /// The CoinMarketCap ID for this market pair. This ID can reliably be used to identify this unique market as the ID never changes.
+        /// The CoinMarketCap ID for this market pair. This ID can reliably be used to identify this unique market as the ID never
+        /// changes.
         /// </summary>
         [DataMember(Name = "market_id")]
         public int MarketId { get; set; }
 
         /// <summary>
-        /// The name of this market pair. Example: "BTC/USD"
+        /// The name of this market pair. Example: <value>BTC/USD</value>
         /// </summary>
         [DataMember(Name = "market_pair")]
         public string MarketPairName { get; set; }
 
         /// <summary>
-        /// The category of trading this market falls under. "Spot" markets are the most common, but options include "derivatives" and "OTC".
+        /// The category of trading this market falls under. <value>Spot</value> markets are the most common, but options include 
+        /// <value>derivatives</value> and <value>OTC</value>.
         /// </summary>
         [DataMember(Name = "category")]
         public string Category { get; set; }
@@ -76,7 +79,8 @@ namespace CoinMarketCap.DataContracts
         public string FeeType { get; set; }
 
         /// <summary>
-        /// The URL to this market's trading page on the exchange if available. If not available the exchange's homepage URL is returned. This field is only returned if requested through the aux request parameter.
+        /// The URL to this market's trading page on the exchange if available. If not available the exchange's homepage URL is
+        /// returned. This field is only returned if requested through the aux request parameter.
         /// </summary>
         [DataMember(Name = "market_url", EmitDefaultValue = false)]
         public string MarketUrl { get; set; }
@@ -93,14 +97,11 @@ namespace CoinMarketCap.DataContracts
         [DataMember(Name = "market_pair_quote")]
         public MarketPairQuote MarketPairQuote { get; set; }
 
-        ///// <summary>
-        ///// One or more market quotes where $key is the conversion currency requested, ex. USD
-        ///// </summary>
-        //[DataMember(Name = "quote")]
-        //public MarketPairQuotesObject Quote { get; set; }
-
+        /// <summary>
+        /// One or more market quotes where <value>$key</value> is the conversion currency requested, ex. <value>USD</value>.
+        /// </summary>
         [DataMember(Name = "quote")]
-        public Dictionary<string, MarketPairQuotesObject> Quote { get; set; }
+        public Dictionary<string, MarketPairQuotes> Quote { get; set; }
 
     }
 
@@ -129,7 +130,11 @@ namespace CoinMarketCap.DataContracts
         public string Name { get; set; }
 
         /// <summary>
-        /// A Markdown formatted message outlining a condition that is impacting the availability of this exchange's market data or the secure use of the exchange, otherwise null. This may include a maintenance event on the exchange's end or CoinMarketCap's end, an alert about reported issues with withdrawls from this exchange, or another condition that may be impacting this exchange and it's markets. If present, this notice is also displayed in an alert banner at the top of the exchange's page on coinmarketcap.com. This field is only returned if requested through the aux request parameter.
+        /// A Markdown formatted message outlining a condition that is impacting the availability of this exchange's market data or the
+        /// secure use of the exchange, otherwise null. This may include a maintenance event on the exchange's end or CoinMarketCap's
+        /// end, an alert about reported issues with withdrawls from this exchange, or another condition that may be impacting this
+        /// exchange and it's markets. If present, this notice is also displayed in an alert banner at the top of the exchange's page
+        /// on coinmarketcap.com. This field is only returned if requested through the aux request parameter.
         /// </summary>
         [DataMember(Name = "notice", EmitDefaultValue = false)]
         public string Notice { get; set; }
@@ -161,19 +166,22 @@ namespace CoinMarketCap.DataContracts
         public string CurrencySymbol { get; set; }
 
         /// <summary>
-        /// The web URL friendly shorthand version of this cryptocurrency name. This field is only returned if requested through the aux request parameter.
+        /// The web URL friendly shorthand version of this cryptocurrency name. This field is only returned if requested through the
+        /// aux request parameter.
         /// </summary>
         [DataMember(Name = "currency_slug", EmitDefaultValue = false)]
         public string CurrencySlug { get; set; }
 
         /// <summary>
-        /// The exchange reported symbol for the base currency in this market pair. In most cases this is identical to CoinMarketCap's symbol but it may differ if the exchange uses an outdated or contentious symbol that contrasts with the majority of other markets.
+        /// The exchange reported symbol for the base currency in this market pair. In most cases this is identical to CoinMarketCap's
+        /// symbol but it may differ if the exchange uses an outdated or contentious symbol that contrasts with the majority of other
+        /// markets.
         /// </summary>
         [DataMember(Name = "exchange_symbol")]
         public string ExchangeSymbol { get; set; }
 
         /// <summary>
-        /// The currency type for the base currency in this market pair ("cryptocurrency", "fiat").
+        /// The currency type for the base currency in this market pair (<value>cryptocurrency</value>, <value>fiat</value>).
         /// </summary>
         [DataMember(Name = "currency_type")]
         public string CurrencyType { get; set; }
@@ -204,33 +212,39 @@ namespace CoinMarketCap.DataContracts
         public string CurrencySymbol { get; set; }
 
         /// <summary>
-        /// The web URL friendly shorthand version of this cryptocurrency name. This field is only returned if requested through the aux request parameter.
+        /// The web URL friendly shorthand version of this cryptocurrency name. This field is only returned if requested through the
+        /// aux request parameter.
         /// </summary>
         [DataMember(Name = "currency_slug", EmitDefaultValue = false)]
         public string CurrencySlug { get; set; }
 
         /// <summary>
-        /// The exchange reported symbol for the quote (secondary) currency in this market pair. In most cases this is identical to CoinMarketCap's symbol but it may differ if the exchange uses an outdated or contentious symbol that contrasts with the majority of other markets.
+        /// The exchange reported symbol for the quote (secondary) currency in this market pair. In most cases this is identical to
+        /// CoinMarketCap's symbol but it may differ if the exchange uses an outdated or contentious symbol that contrasts with the
+        /// majority of other markets.
         /// </summary>
         [DataMember(Name = "exchange_symbol")]
         public string ExchangeSymbol { get; set; }
 
         /// <summary>
-        /// The currency type for the quote (secondary) currency in this market pair ("cryptocurrency", "fiat").
+        /// The currency type for the quote (secondary) currency in this market pair (<value>cryptocurrency</value>, 
+        /// <value>fiat</value>).
         /// </summary>
         [DataMember(Name = "currency_type")]
         public string CurrencyType { get; set; }
     }
 
     /// <summary>
-    /// Market Pair quotes object containing key->quote objects for each convert option requested. "USD" and "exchange_reported" are defaults.
+    /// Market Pair quotes object containing key-&gt;quote objects for each convert option requested. <value>USD</value> 
+    /// and <value>exchange_reported</value> are defaults.
     /// </summary>
     [DataContract]
-    public class MarketPairQuotesObject
+    public class MarketPairQuotes
     {
         /// <summary>
-        /// "Exhange_Reported" - The latest exchange reported price for this market pair in quote currency units.
-        /// "$Key" - The latest exchange reported price for this market pair converted into the requested convert currency.
+        /// <value>Exhange_Reported</value> - The latest exchange reported price for this market pair in quote currency units.
+        /// <value>$Key</value> - The latest exchange reported price for this market pair converted into the requested convert
+        /// currency.
         /// </summary>
         [DataMember(Name = "price")]
         public double Price { get; set; }
@@ -248,20 +262,23 @@ namespace CoinMarketCap.DataContracts
         public double Volume24HQuote { get; set; }    
 
         /// <summary>
-        /// The latest exchange reported price in base units converted into the requested convert currency. This field is only returned if requested through the aux request parameter.
+        /// The latest exchange reported price in base units converted into the requested convert currency. This field is only returned
+        /// if requested through the aux request parameter.
         /// </summary>
         [DataMember(Name = "price_quote", EmitDefaultValue = false)]
         public double PriceQuote { get; set; }
 
         /// <summary>
-        /// The latest exchange reported 24 hour rolling volume in quote units for this market pair converted into the requested convert currency.
+        /// The latest exchange reported 24 hour rolling volume in quote units for this market pair converted into the requested
+        /// convert currency.
         /// </summary>
         [DataMember(Name = "volume_24h", EmitDefaultValue = false)]
         public double Volume24H { get; set; }
 
         /// <summary>
-        /// "Exchange_Reported" - Timestamp (ISO 8601) of the last time this market data was updated.
-        /// "$Key" - Timestamp (ISO 8601) of when the conversion currency's current value was referenced for this conversion.
+        /// <value>Exchange_Reported</value> - Timestamp (ISO 8601) of the last time this market data was updated.
+        /// <value>$Key</value> - Timestamp (ISO 8601) of when the conversion currency's current value was referenced for this
+        /// conversion.
         /// </summary>
         [DataMember(Name = "last_updated")]
         public string LastUpdated { get; set; }
