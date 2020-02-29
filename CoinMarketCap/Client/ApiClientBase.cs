@@ -52,26 +52,26 @@ namespace CoinMarketCap.Client
                     {
                         throw;
                     }
+                    // Deserialize response from the API if present
                     using (var response = ex.Response)
                     {
-                        var dataRs = response.GetResponseStream();
-                        if (dataRs == null)
+                        var stream = response.GetResponseStream();
+                        if (stream == null)
                         {
                             throw;
                         }
 
-                        using (var reader = new StreamReader(dataRs))
+                        using (var reader = new StreamReader(stream))
                         {
                             responseJson = reader.ReadToEnd();
                         }
                     }
                 }
             }
-            
-            return 
-                string.IsNullOrWhiteSpace(responseJson)
+
+            return string.IsNullOrWhiteSpace(responseJson)
                 ? null
-                : JsonConvert.DeserializeObject<T>(responseJson);;
+                : JsonConvert.DeserializeObject<T>(responseJson);
         }
     }
 }

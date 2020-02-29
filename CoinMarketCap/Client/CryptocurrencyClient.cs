@@ -14,7 +14,7 @@ namespace CoinMarketCap.Client
         /// Returns a mapping of all cryptocurrencies to unique CoinMarketCap IDs.
         /// <remarks>See https://coinmarketcap.com/api/documentation/v1/#operation/getV1CryptocurrencyMap </remarks>
         /// </summary>
-        /// <param name="listingStatus"></param>
+        /// <param name="listingStatus">Default: <value>"active"</value>. Only active cryptocurrencies are returned by default. Pass <value>inactive</value> to get a list of cryptocurrencies that are no longer active. Pass <value>untracked</value> to get a list of cryptocurrencies that are listed but do not yet meet methodology requirements to have tracked markets available. You may pass one or more comma-separated values.</param>
         /// <param name="start"></param>
         /// <param name="limit"></param>
         /// <param name="sort"></param>
@@ -242,14 +242,56 @@ namespace CoinMarketCap.Client
         /// <remarks>See https://coinmarketcap.com/api/documentation/v1/#operation/getV1CryptocurrencyListingsHistorical </remarks>
         /// </summary>
         /// <param name="date">Date to reference day of snapshot.</param>
-        /// <param name="start"></param>
-        /// <param name="limit"></param>
-        /// <param name="convert"></param>
-        /// <param name="convertId"></param>
-        /// <param name="sort"></param>
-        /// <param name="sortDir"></param>
-        /// <param name="cryptocurrencyType"></param>
-        /// <param name="aux"></param>
+        /// <param name="start">
+        /// Optionally offset the start (1-based index) of the paginated list of items to return.
+        ///     Default: <value>1</value></param>
+        ///     Valid values <value>&gt;= 1</value>
+        /// <param name="limit">
+        /// Optionally specify the number of results to return. Use this parameter and the
+        /// <see cref="start"/> parameter to determine your own pagination size.
+        ///     Default: <value>100</value>
+        ///     Valid values <value>[ 1 .. 5000 ]</value>
+        /// </param>        
+        /// <param name="convert">
+        /// Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated
+        /// list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first
+        /// requires an additional call credit. A list of supported fiat options can be found at
+        /// https://coinmarketcap.com/api/documentation/v1/#section/Standards-and-Conventions.
+        /// </param>
+        /// <param name="convertId">
+        /// Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is
+        /// identical to <see cref="convert"/> outside of ID format. Ex: <value>convert_id=1,2781</value>
+        /// would replace <value>convert=BTC,USD</value> in your query. This parameter cannot be used when
+        /// <see cref="convert"/> is used.
+        /// </param>
+        /// <param name="sort">
+        /// What field to sort the list of cryptocurrencies by.
+        ///     Default: <value>cmc_rank</value>
+        ///     Valid values: <value>cmc_rank</value>, <value>name</value>, <value>symbol</value>,
+        ///                   <value>date_added</value>, <value>market_cap</value>,
+        ///                   <value>price</value>,
+        ///                   <value>circulating_supply</value>, <value>total_supply</value>,
+        ///                   <value>max_supply</value>, 
+        ///                   <value>volume_24h</value>, <value>percent_change_1h</value>,
+        ///                   <value>percent_change_24h</value>, <value>percent_change_7d</value>,
+        ///                   <value>market_cap_by_total_supply_strict</value>, <value>volume_7d</value>
+        /// </param>
+        /// <param name="sortDir">
+        /// The direction in which to order cryptocurrencies against the specified sort.
+        ///     Valid values: <value>asc</value>, <value>desc</value>
+        /// </param>
+        /// <param name="cryptocurrencyType">
+        /// The type of cryptocurrency to include.
+        ///     Default: <value>all</value>
+        ///     Valid values:  <value>all</value>, <value>coins</value>, <value>tokens</value>
+        /// </param>
+        /// <param name="aux">
+        /// Optionally specify a comma-separated list of supplemental data fields to return. Pass
+        /// <value>platform,tags,date_added,circulating_supply,total_supply,max_supply,cmc_rank</value> to
+        /// include all auxiliary fields.
+        ///     Default: <value>platform,tags,date_added,circulating_supply,total_supply,max_supply,cmc_rank</value>
+        /// </param>
+        /// <returns>Each conversion is returned in its own <see cref="Quote"/> object.</returns>
         /// <returns></returns>
         public ApiResponseList<Cryptocurrency> ListingsHistorical(
             DateTime date, int? start = null, int? limit = null,
@@ -260,7 +302,7 @@ namespace CoinMarketCap.Client
             return ApiRequest<ApiResponseList<Cryptocurrency>>("cryptocurrency/listings/historical",
                 new Dictionary<string, string>
                 {
-                    ["date"] = date.ToLongDateString(),
+                    ["date"] = date.ToString("yyyy-MM-dd"),
                     ["start"] = start?.ToString(),
                     ["limit"] = limit?.ToString(),
                     ["convert"] = convert,
@@ -362,7 +404,7 @@ namespace CoinMarketCap.Client
                     ["convert"] = convert,
                     ["convert_id"] = convertId,
                     ["aux"] = aux,
-                    ["skip_invalid"] = "true"
+                    ["skip_invalid"] = skipInvalid ? "true" : string.Empty
                 });
         }
 

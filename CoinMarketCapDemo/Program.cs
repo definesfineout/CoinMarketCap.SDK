@@ -128,17 +128,15 @@ namespace CoinMarketCapDemo
 
         private static void CryptocurrencyListingsHistorical()
         {
-            Console.WriteLine("\nEnter date: ");
-            var date = new DateTime();
-
+            Console.WriteLine("\nEnter date (YYYY-MM-DD):");
+            DateTime date;
             while (!DateTime.TryParse(Console.ReadLine(), out date))
             {
-                Console.WriteLine($"\nSorry, {date} is not a valid date.\nPlease enter a date using the format YYYY-MM-DD");
-                Console.WriteLine("\nEnter start date: ");
+                Console.WriteLine("\nInvalid date. Please enter a date using the format YYYY-MM-DD\nEnter start date: ");
             }
 
             var client = new CryptocurrencyClient();
-            var response = client.ListingsHistorical(date);
+            var response = client.ListingsHistorical(date, 1, 1);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
             ShowResponseAndWait(json);
