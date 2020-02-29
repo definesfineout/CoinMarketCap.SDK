@@ -342,16 +342,46 @@ namespace CoinMarketCap.Client
         /// <summary>
         /// <see cref="MarketPairsLatest"/>
         /// </summary>
-        /// <param name="id">A cryptocurrency or fiat currency by CoinMarketCap ID to list market pairs for. Example: "1"</param>
-        /// <param name="start">Optionally offset the start (1-based index) of the paginated list of items to return. Default is 1.</param>
-        /// <param name="limit">Optionally specify the number of results to return. Use this parameter and the "start" parameter to determine your own pagination size.</param>
-        /// <param name="sortDir">Optionally specify the sort direction of markets returned. Default is "desc".</param>
-        /// <param name="sort">Optionally specify the sort order of markets returned. By default we return a strict sort on 24 hour reported volume. Pass cmc_rank to return a CMC methodology based sort where markets with excluded volumes are returned last.</param>
-        /// <param name="aux">Optionally specify a comma-separated list of supplemental data fields to return. Pass num_market_pairs,category,fee_type,market_url,currency_name,currency_slug,price_quote,notice to include all auxiliary fields.</param>
-        /// <param name="matchedId">Optionally include one or more fiat or cryptocurrency IDs to filter market pairs by. For example ?id=1&matched_id=2781 would only return BTC markets that matched: "BTC/USD" or "USD/BTC". This parameter cannot be used when matched_symbol is used.</param>
-        /// <param name="matchedSymbol">Optionally include one or more fiat or cryptocurrency symbols to filter market pairs by. For example ?symbol=BTC&matched_symbol=USD would only return BTC markets that matched: "BTC/USD" or "USD/BTC". This parameter cannot be used when matched_id is used.</param>
-        /// <param name="convert">Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first requires an additional call credit. A list of supported fiat options can be found here. Each conversion is returned in its own "quote" object.</param>
-        /// <param name="convertId">Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is identical to convert outside of ID format. Ex: convert_id=1,2781 would replace convert=BTC,USD in your query. This parameter cannot be used when convert is used.</param>
+        /// <param name="id">A cryptocurrency or fiat currency by CoinMarketCap ID to list market pairs for. 
+        /// Example: <value>1</value></param>
+        /// <param name="start">Optionally offset the start (1-based index) of the paginated list of items to return.
+        ///     Default: <value>1</value>
+        ///     Valid values <value>&gt;= 1</value></param>
+        /// <param name="limit">Optionally specify the number of results to return. Use this parameter and the 
+        /// <see cref="start"/> parameter to determine your own pagination size.
+        ///     Default: <value>100</value>
+        ///     Valid values <value>[ 1 .. 5000 ]</value>
+        /// </param>
+        /// <param name="sortDir">Optionally specify the sort direction of markets returned. 
+        ///     Default is <value>desc</value>.
+        /// </param>
+        /// <param name="sort">Optionally specify the sort order of markets returned. By default we return a strict sort on
+        /// 24 hour reported volume. Pass <value>cmc_rank</value> to return a CMC methodology based sort where markets 
+        /// with excluded volumes are returned last.
+        ///     Default: <value>volume_24h_strict</value>
+        ///     Valid values: <value>volume_24h_strict</value>, <value>cmc_rank</value>
+        /// </param>
+        /// <param name="aux">Optionally specify a comma-separated list of supplemental data fields to return. 
+        /// Pass <value>num_market_pairs, category, fee_type, market_url, currency_name, currency_slug, price_quote, 
+        /// notice</value> to include all auxiliary fields.
+        ///     Default: <value>num_market_pairs</value>, <value>category</value>, <value>fee_type</value>
+        ///</param>
+        /// <param name="matchedId">Optionally include one or more fiat or cryptocurrency IDs to filter market pairs by. 
+        /// For example: <value>?id=1&amp;matched_id=2781</value> would only return BTC markets that matched: 
+        /// <value>BTC/USD</value> or <value>USD/BTC</value>. This parameter cannot be used when <see cref="matchedSymbol"/> 
+        /// is used.</param>
+        /// <param name="matchedSymbol">Optionally include one or more fiat or cryptocurrency symbols to filter market pairs by. 
+        /// For example: <value>?symbol=BTC&amp;matched_symbol=USD</value> would only return BTC markets that matched: 
+        /// <value>BTC/USD</value> or <value>USD/BTC</value>. This parameter cannot be used when <see cref="matchedId"/> is used.
+        /// </param>
+        /// <param name="convert">Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated 
+        /// list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first requires an additional 
+        /// call credit. A list of supported fiat options can be found at 
+        /// https://sandbox.coinmarketcap.com/api/v1/#section/Standards-and-Conventions. 
+        /// Each conversion is returned in its own <value>quote</value> object.</param>
+        /// <param name="convertId">Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is 
+        /// identical to <see cref="convert"/> outside of ID format. Ex: convert_id=1,2781 would replace convert=BTC,USD in your 
+        /// query. This parameter cannot be used when <see cref="convert"/> is used.</param>
         /// <returns></returns>
         public ApiResponse<CryptocurrencyMarketPairs> MarketPairsLatestById(
             string id, int? start = 1, int? limit = null, 
@@ -365,16 +395,45 @@ namespace CoinMarketCap.Client
         /// <summary>
         /// <see cref="MarketPairsLatest"/>
         /// </summary>
-        /// <param name="slug">Alternatively pass a cryptocurrency by slug. Example: "bitcoin"</param>
-        /// <param name="start">Optionally offset the start (1-based index) of the paginated list of items to return. Default is 1.</param>
-        /// <param name="limit">Optionally specify the number of results to return. Use this parameter and the "start" parameter to determine your own pagination size.</param>
-        /// <param name="sortDir">Optionally specify the sort direction of markets returned. Default is "desc".</param>
-        /// <param name="sort">Optionally specify the sort order of markets returned. By default we return a strict sort on 24 hour reported volume. Pass cmc_rank to return a CMC methodology based sort where markets with excluded volumes are returned last.</param>
-        /// <param name="aux">Optionally specify a comma-separated list of supplemental data fields to return. Pass num_market_pairs,category,fee_type,market_url,currency_name,currency_slug,price_quote,notice to include all auxiliary fields.</param>
-        /// <param name="matchedId">Optionally include one or more fiat or cryptocurrency IDs to filter market pairs by. For example ?id=1&matched_id=2781 would only return BTC markets that matched: "BTC/USD" or "USD/BTC". This parameter cannot be used when matched_symbol is used.</param>
-        /// <param name="matchedSymbol">Optionally include one or more fiat or cryptocurrency symbols to filter market pairs by. For example ?symbol=BTC&matched_symbol=USD would only return BTC markets that matched: "BTC/USD" or "USD/BTC". This parameter cannot be used when matched_id is used.</param>
-        /// <param name="convert">Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first requires an additional call credit. A list of supported fiat options can be found here. Each conversion is returned in its own "quote" object.</param>
-        /// <param name="convertId">Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is identical to convert outside of ID format. Ex: convert_id=1,2781 would replace convert=BTC,USD in your query. This parameter cannot be used when convert is used.</param>
+        /// <param name="slug">Alternatively pass a cryptocurrency by slug. Example: <value>bitcoin</value></param>
+        /// <param name="start">Optionally offset the start (1-based index) of the paginated list of items to return.
+        ///     Default: <value>1</value>
+        ///     Valid values <value>&gt;= 1</value></param>
+        /// <param name="limit">Optionally specify the number of results to return. Use this parameter and the 
+        /// <see cref="start"/> parameter to determine your own pagination size.
+        ///     Default: <value>100</value>
+        ///     Valid values <value>[ 1 .. 5000 ]</value>
+        /// </param>
+        /// <param name="sortDir">Optionally specify the sort direction of markets returned. 
+        ///     Default is <value>desc</value>.
+        /// </param>
+        /// <param name="sort">Optionally specify the sort order of markets returned. By default we return a strict sort on
+        /// 24 hour reported volume. Pass <value>cmc_rank</value> to return a CMC methodology based sort where markets 
+        /// with excluded volumes are returned last.
+        ///     Default: <value>volume_24h_strict</value>
+        ///     Valid values: <value>volume_24h_strict</value>, <value>cmc_rank</value>
+        /// </param>
+        /// <param name="aux">Optionally specify a comma-separated list of supplemental data fields to return. 
+        /// Pass <value>num_market_pairs, category, fee_type, market_url, currency_name, currency_slug, price_quote, 
+        /// notice</value> to include all auxiliary fields.
+        ///     Default: <value>num_market_pairs</value>, <value>category</value>, <value>fee_type</value>
+        ///</param>
+        /// <param name="matchedId">Optionally include one or more fiat or cryptocurrency IDs to filter market pairs by. 
+        /// For example: <value>?id=1&amp;matched_id=2781</value> would only return BTC markets that matched: 
+        /// <value>BTC/USD</value> or <value>USD/BTC</value>. This parameter cannot be used when <see cref="matchedSymbol"/> 
+        /// is used.</param>
+        /// <param name="matchedSymbol">Optionally include one or more fiat or cryptocurrency symbols to filter market pairs by. 
+        /// For example: <value>?symbol=BTC&amp;matched_symbol=USD</value> would only return BTC markets that matched: 
+        /// <value>BTC/USD</value> or <value>USD/BTC</value>. This parameter cannot be used when <see cref="matchedId"/> is used.
+        /// </param>
+        /// <param name="convert">Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated 
+        /// list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first requires an additional 
+        /// call credit. A list of supported fiat options can be found at 
+        /// https://sandbox.coinmarketcap.com/api/v1/#section/Standards-and-Conventions. 
+        /// Each conversion is returned in its own <value>quote</value> object.</param>
+        /// <param name="convertId">Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is 
+        /// identical to <see cref="convert"/> outside of ID format. Ex: convert_id=1,2781 would replace convert=BTC,USD in your 
+        /// query. This parameter cannot be used when <see cref="convert"/> is used.</param>
         /// <returns></returns>
         public ApiResponse<CryptocurrencyMarketPairs> MarketPairsLatestBySlug(
             string slug, int? start = 1, int? limit = null,
@@ -388,17 +447,48 @@ namespace CoinMarketCap.Client
         /// <summary>
         /// <see cref="MarketPairsLatest"/>
         /// </summary>
-        /// <param name="symbol">Alternatively pass a cryptocurrency by symbol. Fiat currencies are not supported by this field. Example: "BTC". A single cryptocurrency "id", "slug", or "symbol" is required.</param>
-        /// <param name="start">Optionally offset the start (1-based index) of the paginated list of items to return. Default is 1.</param>
-        /// <param name="limit">Optionally specify the number of results to return. Use this parameter and the "start" parameter to determine your own pagination size.</param>
-        /// <param name="sortDir">Optionally specify the sort direction of markets returned. Default is "desc".</param>
-        /// <param name="sort">Optionally specify the sort order of markets returned. By default we return a strict sort on 24 hour reported volume. Pass cmc_rank to return a CMC methodology based sort where markets with excluded volumes are returned last.</param>
-        /// <param name="aux">Optionally specify a comma-separated list of supplemental data fields to return. Pass num_market_pairs,category,fee_type,market_url,currency_name,currency_slug,price_quote,notice to include all auxiliary fields.</param>
-        /// <param name="matchedId">Optionally include one or more fiat or cryptocurrency IDs to filter market pairs by. For example ?id=1&matched_id=2781 would only return BTC markets that matched: "BTC/USD" or "USD/BTC". This parameter cannot be used when matched_symbol is used.</param>
-        /// <param name="matchedSymbol">Optionally include one or more fiat or cryptocurrency symbols to filter market pairs by. For example ?symbol=BTC&matched_symbol=USD would only return BTC markets that matched: "BTC/USD" or "USD/BTC". This parameter cannot be used when matched_id is used.</param>
-        /// <param name="convert">Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first requires an additional call credit. A list of supported fiat options can be found here. Each conversion is returned in its own "quote" object.</param>
-        /// <param name="convertId">Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is identical to convert outside of ID format. Ex: convert_id=1,2781 would replace convert=BTC,USD in your query. This parameter cannot be used when convert is used.</param>
-        /// <returns>Results of your query returned as an object.</returns>
+        /// <param name="symbol">Alternatively pass a cryptocurrency by symbol. Fiat currencies are not supported by this field.
+        /// Example: <value>BTC</value>. A single cryptocurrency <value>id</value>, <value>slug</value>, or <value>symbol</value> 
+        /// is required.</param>
+        /// <param name="start">Optionally offset the start (1-based index) of the paginated list of items to return.
+        ///     Default: <value>1</value>
+        ///     Valid values <value>&gt;= 1</value></param>
+        /// <param name="limit">Optionally specify the number of results to return. Use this parameter and the 
+        /// <see cref="start"/> parameter to determine your own pagination size.
+        ///     Default: <value>100</value>
+        ///     Valid values <value>[ 1 .. 5000 ]</value>
+        /// </param>
+        /// <param name="sortDir">Optionally specify the sort direction of markets returned. 
+        ///     Default is <value>desc</value>.
+        /// </param>
+        /// <param name="sort">Optionally specify the sort order of markets returned. By default we return a strict sort on
+        /// 24 hour reported volume. Pass <value>cmc_rank</value> to return a CMC methodology based sort where markets 
+        /// with excluded volumes are returned last.
+        ///     Default: <value>volume_24h_strict</value>
+        ///     Valid values: <value>volume_24h_strict</value>, <value>cmc_rank</value>
+        /// </param>
+        /// <param name="aux">Optionally specify a comma-separated list of supplemental data fields to return. 
+        /// Pass <value>num_market_pairs, category, fee_type, market_url, currency_name, currency_slug, price_quote, 
+        /// notice</value> to include all auxiliary fields.
+        ///     Default: <value>num_market_pairs</value>, <value>category</value>, <value>fee_type</value>
+        ///</param>
+        /// <param name="matchedId">Optionally include one or more fiat or cryptocurrency IDs to filter market pairs by. 
+        /// For example: <value>?id=1&amp;matched_id=2781</value> would only return BTC markets that matched: 
+        /// <value>BTC/USD</value> or <value>USD/BTC</value>. This parameter cannot be used when <see cref="matchedSymbol"/> 
+        /// is used.</param>
+        /// <param name="matchedSymbol">Optionally include one or more fiat or cryptocurrency symbols to filter market pairs by. 
+        /// For example: <value>?symbol=BTC&amp;matched_symbol=USD</value> would only return BTC markets that matched: 
+        /// <value>BTC/USD</value> or <value>USD/BTC</value>. This parameter cannot be used when <see cref="matchedId"/> is used.
+        /// </param>
+        /// <param name="convert">Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated 
+        /// list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first requires an additional 
+        /// call credit. A list of supported fiat options can be found at 
+        /// https://sandbox.coinmarketcap.com/api/v1/#section/Standards-and-Conventions. 
+        /// Each conversion is returned in its own <value>quote</value> object.</param>
+        /// <param name="convertId">Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is 
+        /// identical to <see cref="convert"/> outside of ID format. Ex: convert_id=1,2781 would replace convert=BTC,USD in your 
+        /// query. This parameter cannot be used when <see cref="convert"/> is used.</param>
+        /// <returns></returns>
         public ApiResponse<CryptocurrencyMarketPairs> MarketPairsLatestBySymbol(
             string symbol, int? start = 1, int? limit = null,
             string sortDir = null, string sort = null, string aux = null,
@@ -409,21 +499,52 @@ namespace CoinMarketCap.Client
         }
 
         /// <summary>
-        /// Lists all active market pairs that CoinMarketCap tracks for a given cryptocurrency or fiat currency. All markets with this currency as the pair base or pair quote will be returned. The latest price and volume information is returned for each market. Use the "convert" option to return market values in multiple fiat and cryptocurrency conversions in the same call.
+        /// Lists all active market pairs that CoinMarketCap tracks for a given cryptocurrency or fiat currency. All markets with this
+        /// currency as the pair base or pair quote will be returned. The latest price and volume information is returned for each
+        /// market. Use the <see cref="convert"/> option to return market values in multiple fiat and cryptocurrency conversions in the
+        /// same call.
         /// <remarks>See https://coinmarketcap.com/api/documentation/v1/#operation/getV1CryptocurrencyMarketpairsLatest </remarks>
         /// </summary>
-        /// <param name="id">A cryptocurrency or fiat currency by CoinMarketCap ID to list market pairs for. Example: "1"</param>
-        /// <param name="slug">Alternatively pass a cryptocurrency by slug. Example: "bitcoin"</param>
-        /// <param name="symbol">Alternatively pass a cryptocurrency by symbol. Fiat currencies are not supported by this field. Example: "BTC". A single cryptocurrency "id", "slug", or "symbol" is required.</param>
-        /// <param name="start">Optionally offset the start (1-based index) of the paginated list of items to return. Default is 1.</param>
-        /// <param name="limit">Optionally specify the number of results to return. Use this parameter and the "start" parameter to determine your own pagination size.</param>
-        /// <param name="sortDir">Optionally specify the sort direction of markets returned. Default is "desc".</param>
-        /// <param name="sort">Optionally specify the sort order of markets returned. By default we return a strict sort on 24 hour reported volume. Pass cmc_rank to return a CMC methodology based sort where markets with excluded volumes are returned last.</param>
-        /// <param name="aux">Optionally specify a comma-separated list of supplemental data fields to return. Pass num_market_pairs,category,fee_type,market_url,currency_name,currency_slug,price_quote,notice to include all auxiliary fields.</param>
-        /// <param name="matchedId">Optionally include one or more fiat or cryptocurrency IDs to filter market pairs by. For example ?id=1&matched_id=2781 would only return BTC markets that matched: "BTC/USD" or "USD/BTC". This parameter cannot be used when matched_symbol is used.</param>
-        /// <param name="matchedSymbol">Optionally include one or more fiat or cryptocurrency symbols to filter market pairs by. For example ?symbol=BTC&matched_symbol=USD would only return BTC markets that matched: "BTC/USD" or "USD/BTC". This parameter cannot be used when matched_id is used.</param>
-        /// <param name="convert">Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first requires an additional call credit. A list of supported fiat options can be found here. Each conversion is returned in its own "quote" object.</param>
-        /// <param name="convertId">Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is identical to convert outside of ID format. Ex: convert_id=1,2781 would replace convert=BTC,USD in your query. This parameter cannot be used when convert is used.</param>
+        /// <param name="id">A cryptocurrency or fiat currency by CoinMarketCap ID to list market pairs for. 
+        /// Example: <value>1</value></param>
+        /// <param name="start">Optionally offset the start (1-based index) of the paginated list of items to return.
+        ///     Default: <value>1</value>
+        ///     Valid values <value>&gt;= 1</value></param>
+        /// <param name="limit">Optionally specify the number of results to return. Use this parameter and the 
+        /// <see cref="start"/> parameter to determine your own pagination size.
+        ///     Default: <value>100</value>
+        ///     Valid values <value>[ 1 .. 5000 ]</value>
+        /// </param>
+        /// <param name="sortDir">Optionally specify the sort direction of markets returned. 
+        ///     Default is <value>desc</value>.
+        /// </param>
+        /// <param name="sort">Optionally specify the sort order of markets returned. By default we return a strict sort on
+        /// 24 hour reported volume. Pass <value>cmc_rank</value> to return a CMC methodology based sort where markets 
+        /// with excluded volumes are returned last.
+        ///     Default: <value>volume_24h_strict</value>
+        ///     Valid values: <value>volume_24h_strict</value>, <value>cmc_rank</value>
+        /// </param>
+        /// <param name="aux">Optionally specify a comma-separated list of supplemental data fields to return. 
+        /// Pass <value>num_market_pairs, category, fee_type, market_url, currency_name, currency_slug, price_quote, 
+        /// notice</value> to include all auxiliary fields.
+        ///     Default: <value>num_market_pairs</value>, <value>category</value>, <value>fee_type</value>
+        ///</param>
+        /// <param name="matchedId">Optionally include one or more fiat or cryptocurrency IDs to filter market pairs by. 
+        /// For example: <value>?id=1&amp;matched_id=2781</value> would only return BTC markets that matched: 
+        /// <value>BTC/USD</value> or <value>USD/BTC</value>. This parameter cannot be used when <see cref="matchedSymbol"/> 
+        /// is used.</param>
+        /// <param name="matchedSymbol">Optionally include one or more fiat or cryptocurrency symbols to filter market pairs by. 
+        /// For example: <value>?symbol=BTC&amp;matched_symbol=USD</value> would only return BTC markets that matched: 
+        /// <value>BTC/USD</value> or <value>USD/BTC</value>. This parameter cannot be used when <see cref="matchedId"/> is used.
+        /// </param>
+        /// <param name="convert">Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated 
+        /// list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first requires an additional 
+        /// call credit. A list of supported fiat options can be found at 
+        /// https://sandbox.coinmarketcap.com/api/v1/#section/Standards-and-Conventions. 
+        /// Each conversion is returned in its own <value>quote</value> object.</param>
+        /// <param name="convertId">Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is 
+        /// identical to <see cref="convert"/> outside of ID format. Ex: convert_id=1,2781 would replace convert=BTC,USD in your 
+        /// query. This parameter cannot be used when <see cref="convert"/> is used.</param>
         /// <returns>Results of your query returned as an object.</returns>
         public ApiResponse<CryptocurrencyMarketPairs> MarketPairsLatest(
             string id = null, string slug = null, string symbol = null, 
