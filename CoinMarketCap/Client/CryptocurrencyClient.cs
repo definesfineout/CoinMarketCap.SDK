@@ -500,14 +500,14 @@ namespace CoinMarketCap.Client
 
         #region Endpoint: /v1/cryptocurrency/ohlcv/latest - Latest OHLCV
 
-        public ApiResponse<CryptocurrencyOhlcvQuotes> OhlcvLatestById(
+        public ApiResponseMap<CryptocurrencyOhlcvQuotes> OhlcvLatestById(
             string id, string convert = null, string convertId = null, bool? skipInvalid = null)
         {
             return OhlcvLatest(id, null, convert, convertId, skipInvalid);
         }
 
         // ReSharper disable once UnusedMember.Global
-        public ApiResponse<CryptocurrencyOhlcvQuotes> OhlcvLatestBySymbol(
+        public ApiResponseMap<CryptocurrencyOhlcvQuotes> OhlcvLatestBySymbol(
             string symbol, string convert = null, string convertId = null, bool? skipInvalid = null)
         {
             return OhlcvLatest(null, symbol, convert, convertId, skipInvalid);
@@ -547,7 +547,7 @@ namespace CoinMarketCap.Client
         /// lookups will be skipped allowing valid cryptocurrencies to still be returned.
         /// </param>
         /// <returns>Latest OHLCV (Open, High, Low, Close, Volume) market values for the specified cryptocurrencies.</returns>
-        public ApiResponse<CryptocurrencyOhlcvQuotes> OhlcvLatest(
+        public ApiResponseMap<CryptocurrencyOhlcvQuotes> OhlcvLatest(
             string id = null, string symbol = null, string convert = null, string convertId = null,
             bool? skipInvalid = null)
         {
@@ -558,7 +558,7 @@ namespace CoinMarketCap.Client
                     nameof(id));
             }
 
-            return ApiRequest<ApiResponse<CryptocurrencyOhlcvQuotes>>("cryptocurrency/ohlcv/latest",
+            return ApiRequest<ApiResponseMap<CryptocurrencyOhlcvQuotes>>("cryptocurrency/ohlcv/latest",
                 new Dictionary<string, string>
                 {
                     ["id"] = id,
