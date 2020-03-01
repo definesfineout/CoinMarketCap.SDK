@@ -6,7 +6,7 @@
     <Product>CoinMarketCap .NET</Product>
     <Authors>Defines Fineout</Authors>
     <Company>Defines Fineout</Company>
-    <Description>A free, open-source .NET client SDK for the [CoinMarketCap API](https://coinmarketcap.com/api/).</Description>
+    <Description>A free, open-source .NET client SDK for the CoinMarketCap API.</Description>
     <Copyright>© 2020 Defines Fineout</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/dustinfineout/coinmarketcap.net</PackageProjectUrl>
@@ -19,6 +19,7 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageIcon>coinmarketcap-logo.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,4 +28,7 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="img\coinmarketcap-logo.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>
