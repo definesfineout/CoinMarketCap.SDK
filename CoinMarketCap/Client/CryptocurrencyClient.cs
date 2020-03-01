@@ -829,7 +829,7 @@ namespace CoinMarketCap.Client
         /// <param name="timePeriod">
         /// Time period to return OHLCV data for.
         ///     Default: <value>daily</value>
-        ///     Valid values: <value>daily</value>, <value>hourly</value>
+        ///     Valid values: <see cref="eTimePeriodOhlcvHistorical"/>
         ///     See https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical for complete details.
         /// </param>
         /// <param name="timeStart">
@@ -860,14 +860,20 @@ namespace CoinMarketCap.Client
         /// would replace <value>convert=BTC,USD</value> in your query. This parameter cannot be used when
         /// <see cref="convert"/> is used.
         /// </param>
+        /// <param name="skipInvalid">
+        /// Pass <value>true</value> to relax request validation rules. When requesting records on multiple
+        /// cryptocurrencies an error is returned if any invalid cryptocurrencies are requested or a
+        /// cryptocurrency does not have matching records in the requested timeframe. If set to true, invalid
+        /// lookups will be skipped allowing valid cryptocurrencies to still be returned.
+        /// </param>
         /// <returns></returns>
         public ApiResponse<CryptocurrencyOhlcvHistorical> OhlcvHistoricalById(
-            string id, string timePeriod = null,
+            string id, eTimePeriodOhlcvHistorical? timePeriod = null,
             DateTime? timeStart = null, DateTime? timeEnd = null,
             int? count = null, eIntervalOhlcvHistorical? interval = null,
-            string convert = null, string convertId = null)
+            string convert = null, string convertId = null, bool? skipInvalid = null)
         {
-            return OhlcvHistorical(id, null, null, timePeriod, timeStart, timeEnd, count, interval, convert, convertId);
+            return OhlcvHistorical(id, null, null, timePeriod, timeStart, timeEnd, count, interval, convert, convertId, skipInvalid);
         }
 
         /// <summary>
@@ -880,7 +886,7 @@ namespace CoinMarketCap.Client
         /// <param name="timePeriod">
         /// Time period to return OHLCV data for.
         ///     Default: <value>daily</value>
-        ///     Valid values: <value>daily</value>, <value>hourly</value>
+        ///     Valid values: <see cref="eTimePeriodOhlcvHistorical"/>
         ///     See https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical for complete details.
         /// </param>
         /// <param name="timeStart">
@@ -911,14 +917,20 @@ namespace CoinMarketCap.Client
         /// would replace <value>convert=BTC,USD</value> in your query. This parameter cannot be used when
         /// <see cref="convert"/> is used.
         /// </param>
+        /// <param name="skipInvalid">
+        /// Pass <value>true</value> to relax request validation rules. When requesting records on multiple
+        /// cryptocurrencies an error is returned if any invalid cryptocurrencies are requested or a
+        /// cryptocurrency does not have matching records in the requested timeframe. If set to true, invalid
+        /// lookups will be skipped allowing valid cryptocurrencies to still be returned.
+        /// </param>
         /// <returns></returns>
         public ApiResponse<CryptocurrencyOhlcvHistorical> OhlcvHistoricalBySlug(
-        string slug, string timePeriod = null,
+        string slug, eTimePeriodOhlcvHistorical? timePeriod = null,
         DateTime? timeStart = null, DateTime? timeEnd = null,
         int? count = null, eIntervalOhlcvHistorical? interval = null,
-        string convert = null, string convertId = null)
+        string convert = null, string convertId = null, bool? skipInvalid = null)
         {
-            return OhlcvHistorical(null, slug, null, timePeriod, timeStart, timeEnd, count, interval, convert, convertId);
+            return OhlcvHistorical(null, slug, null, timePeriod, timeStart, timeEnd, count, interval, convert, convertId, skipInvalid);
         }
 
         /// <summary>
@@ -931,7 +943,7 @@ namespace CoinMarketCap.Client
         /// <param name="timePeriod">
         /// Time period to return OHLCV data for.
         ///     Default: <value>daily</value>
-        ///     Valid values: <value>daily</value>, <value>hourly</value>
+        ///     Valid values: <see cref="eTimePeriodOhlcvHistorical"/>
         ///     See https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical for complete details.
         /// </param>
         /// <param name="timeStart">
@@ -962,14 +974,20 @@ namespace CoinMarketCap.Client
         /// would replace <value>convert=BTC,USD</value> in your query. This parameter cannot be used when
         /// <see cref="convert"/> is used.
         /// </param>
+        /// <param name="skipInvalid">
+        /// Pass <value>true</value> to relax request validation rules. When requesting records on multiple
+        /// cryptocurrencies an error is returned if any invalid cryptocurrencies are requested or a
+        /// cryptocurrency does not have matching records in the requested timeframe. If set to true, invalid
+        /// lookups will be skipped allowing valid cryptocurrencies to still be returned.
+        /// </param>
         /// <returns></returns>
         public ApiResponse<CryptocurrencyOhlcvHistorical> OhlcvHistoricalBySymbol(
-        string symbol, string timePeriod = null,
+        string symbol, eTimePeriodOhlcvHistorical? timePeriod = null,
         DateTime? timeStart = null, DateTime? timeEnd = null,
         int? count = null, eIntervalOhlcvHistorical? interval = null,
-        string convert = null, string convertId = null)
+        string convert = null, string convertId = null, bool? skipInvalid = null)
         {
-            return OhlcvHistorical(null, null, symbol, timePeriod, timeStart, timeEnd, count, interval, convert, convertId);
+            return OhlcvHistorical(null, null, symbol, timePeriod, timeStart, timeEnd, count, interval, convert, convertId, skipInvalid);
         }
 
         /// <summary>
@@ -992,7 +1010,7 @@ namespace CoinMarketCap.Client
         /// <param name="timePeriod">
         /// Time period to return OHLCV data for.
         ///     Default: <value>daily</value>
-        ///     Valid values: <value>daily</value>, <value>hourly</value>
+        ///     Valid values: <see cref="eTimePeriodOhlcvHistorical"/>
         ///     See https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical for complete details.
         /// </param>
         /// <param name="timeStart">
@@ -1023,13 +1041,19 @@ namespace CoinMarketCap.Client
         /// would replace <value>convert=BTC,USD</value> in your query. This parameter cannot be used when
         /// <see cref="convert"/> is used.
         /// </param>
+        /// <param name="skipInvalid">
+        /// Pass <value>true</value> to relax request validation rules. When requesting records on multiple
+        /// cryptocurrencies an error is returned if any invalid cryptocurrencies are requested or a
+        /// cryptocurrency does not have matching records in the requested timeframe. If set to true, invalid
+        /// lookups will be skipped allowing valid cryptocurrencies to still be returned.
+        /// </param>
         /// <returns>Results of your query returned as an object.</returns>
         public ApiResponse<CryptocurrencyOhlcvHistorical> OhlcvHistorical(
         string id = null, string slug = null, 
-        string symbol = null, string timePeriod = null,
+        string symbol = null, eTimePeriodOhlcvHistorical? timePeriod = null,
         DateTime? timeStart = null, DateTime? timeEnd = null,
         int? count = null, eIntervalOhlcvHistorical? interval = null,
-        string convert = null, string convertId = null)
+        string convert = null, string convertId = null, bool? skipInvalid = null)
         {
             if (string.IsNullOrWhiteSpace(id) &&
                string.IsNullOrWhiteSpace(slug) &&
@@ -1045,13 +1069,14 @@ namespace CoinMarketCap.Client
                    ["id"] = id,
                    ["slug"] = slug,
                    ["symbol"] = symbol,
-                   ["time_period"] = timePeriod,
+                   ["time_period"] = timePeriod?.GetDescription(),
                    ["time_start"] = timeStart?.ToString("yyyy-MM-dd"),
                    ["time_end"] = timeEnd?.ToString("yyyy-MM-dd"),
                    ["count"] = count?.ToString(),
                    ["interval"] = interval?.GetDescription(),
                    ["convert"] = convert,
-                   ["convert_id"] = convertId
+                   ["convert_id"] = convertId,
+                   ["skip_invalid"] = skipInvalid.HasValue && skipInvalid.Value ? "true" : string.Empty
                });
         }
 
