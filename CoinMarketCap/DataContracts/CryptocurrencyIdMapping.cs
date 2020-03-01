@@ -65,13 +65,13 @@ namespace CoinMarketCap.DataContracts
         /// Timestamp (ISO 8601) of the date this cryptocurrency was first available on the platform.
         /// </summary>
         [DataMember(Name = "first_historical_data")]
-        public int FirstHistoricalData { get; set; }
+        public string FirstHistoricalData { get; set; }
 
         /// <summary>
         /// Timestamp (ISO 8601) of the last time this cryptocurrency's market data was updated.
         /// </summary>
         [DataMember(Name = "last_historical_data")]
-        public int LastHistoricalData { get; set; }
+        public string LastHistoricalData { get; set; }
 
         /// <summary>
         /// Metadata about the parent cryptocurrency platform this cryptocurrency belongs to if it is a
