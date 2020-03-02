@@ -1,11 +1,17 @@
 ﻿using CoinMarketCap.Client;
 using Newtonsoft.Json;
 using System;
+using System.Configuration;
 
 namespace CoinMarketCapDemo
 {
     internal class Program
     {
+        private static readonly string ApiKey = ConfigurationManager.AppSettings["CoinMarketCap.ApiKey"];
+
+        private static readonly bool Sandbox =
+            ConfigurationManager.AppSettings["CoinMarketCap.Sandbox"]?.ToLowerInvariant().Equals("true") ?? false;
+
         public static void Main(string[] args)
         {
             Console.WriteLine("CoinMarketCap.NET Demo\n");
@@ -104,7 +110,7 @@ namespace CoinMarketCapDemo
             Console.WriteLine("\nEnter symbol (separate with comma): ");
             var symbol = Console.ReadLine();
 
-            var client = new CryptocurrencyClient();
+            var client = new CryptocurrencyClient(ApiKey, Sandbox);
             var response = client.Map(null, 1, 10, null, symbol);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
@@ -116,7 +122,7 @@ namespace CoinMarketCapDemo
             Console.WriteLine("\nEnter symbol: ");
             var symbol = Console.ReadLine();
 
-            var client = new CryptocurrencyClient();
+            var client = new CryptocurrencyClient(ApiKey, Sandbox);
             var response = client.MetadataBySymbol(symbol);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
@@ -125,7 +131,7 @@ namespace CoinMarketCapDemo
 
         private static void CryptocurrencyListingsLatest()
         {
-            var client = new CryptocurrencyClient();
+            var client = new CryptocurrencyClient(ApiKey, Sandbox);
             var response = client.ListingsLatest(1, 10);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
@@ -141,7 +147,7 @@ namespace CoinMarketCapDemo
                 Console.WriteLine("\nInvalid date. Please enter a date using the format YYYY-MM-DD\nEnter start date: ");
             }
 
-            var client = new CryptocurrencyClient();
+            var client = new CryptocurrencyClient(ApiKey, Sandbox);
             var response = client.ListingsHistorical(date, 1, 1);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
@@ -153,7 +159,7 @@ namespace CoinMarketCapDemo
             Console.WriteLine("\nEnter symbol: ");
             var symbol = Console.ReadLine();
 
-            var client = new CryptocurrencyClient();
+            var client = new CryptocurrencyClient(ApiKey, Sandbox);
             var response = client.QuotesLatestBySymbol(symbol);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
@@ -165,7 +171,7 @@ namespace CoinMarketCapDemo
             Console.WriteLine("\nEnter symbol (separate by comma): ");
             var symbol = Console.ReadLine();
 
-            var client = new CryptocurrencyClient();
+            var client = new CryptocurrencyClient(ApiKey, Sandbox);
             var response = client.OhlcvLatestBySymbol(symbol);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
@@ -178,7 +184,7 @@ namespace CoinMarketCapDemo
             var symbol = Console.ReadLine();
 
             Console.WriteLine("\nEnter start date: ");
-            var startDate = new DateTime();
+            DateTime startDate;
 
             while (!DateTime.TryParse(Console.ReadLine(), out startDate))
             {
@@ -187,7 +193,7 @@ namespace CoinMarketCapDemo
             }
 
             Console.WriteLine("\nEnter end date: ");
-            var endDate = new DateTime();
+            DateTime endDate;
 
             while (!DateTime.TryParse(Console.ReadLine(), out endDate))
             {
@@ -195,7 +201,7 @@ namespace CoinMarketCapDemo
                 Console.WriteLine("\nEnter end date: ");
             }
 
-            var client = new CryptocurrencyClient();
+            var client = new CryptocurrencyClient(ApiKey, Sandbox);
             var response = client.QuotesHistoricalBySymbol(symbol, startDate, endDate);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
@@ -207,7 +213,7 @@ namespace CoinMarketCapDemo
             Console.WriteLine("\nEnter symbol: ");
             var symbol = Console.ReadLine();
 
-            var client = new CryptocurrencyClient();
+            var client = new CryptocurrencyClient(ApiKey, Sandbox);
             var response = client.MarketPairsLatestBySymbol(symbol);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
