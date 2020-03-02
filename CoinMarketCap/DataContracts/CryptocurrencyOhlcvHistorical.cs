@@ -25,12 +25,15 @@ namespace CoinMarketCap.DataContracts
         [DataMember(Name = "symbol")]
         public string Symbol { get; set; }
 
+        /// <summary>
+        /// An array of OHLCV quotes for the supplied interval.
+        /// </summary>
         [DataMember(Name = "quotes")]
         public List<OhlcvHistoricalQuotes> Quotes { get; set; }
     }
 
     /// <summary>
-    /// An array of OHLCV quotes for the supplied interval.
+    /// An array of OHLCV quotes for the specified interval.
     /// </summary>
     [DataContract]
     public class OhlcvHistoricalQuotes
@@ -46,6 +49,20 @@ namespace CoinMarketCap.DataContracts
         /// </summary>
         [DataMember(Name = "time_close")]
         public string TimeClose { get; set; }
+
+        /// <summary>
+        /// Timestamp (ISO 8601) of the high of this time series interval. Note: This data member is only returned in the 
+        /// https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical version.
+        /// </summary>
+        [DataMember(Name = "time_high")]
+        public string TimeHigh { get; set; }
+
+        /// <summary>
+        /// Timestamp (ISO 8601) of the low of this time series interval. Note: This data member is only returned in the 
+        /// https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical version.
+        /// </summary>
+        [DataMember(Name = "time_low")]
+        public string TimeLow { get; set; }
 
         /// <summary>
         ///  A map of market quotes in different currency conversions.The default map included is <value>USD</value>

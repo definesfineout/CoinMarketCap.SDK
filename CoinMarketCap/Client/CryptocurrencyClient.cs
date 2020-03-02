@@ -864,7 +864,8 @@ namespace CoinMarketCap.Client
         /// Pass <value>true</value> to relax request validation rules. When requesting records on multiple
         /// cryptocurrencies an error is returned if any invalid cryptocurrencies are requested or a
         /// cryptocurrency does not have matching records in the requested timeframe. If set to true, invalid
-        /// lookups will be skipped allowing valid cryptocurrencies to still be returned.
+        /// lookups will be skipped allowing valid cryptocurrencies to still be returned. Note: This parameter is only used in the
+        /// https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical version.
         /// </param>
         /// <returns></returns>
         public ApiResponse<CryptocurrencyOhlcvHistorical> OhlcvHistoricalById(
@@ -921,7 +922,8 @@ namespace CoinMarketCap.Client
         /// Pass <value>true</value> to relax request validation rules. When requesting records on multiple
         /// cryptocurrencies an error is returned if any invalid cryptocurrencies are requested or a
         /// cryptocurrency does not have matching records in the requested timeframe. If set to true, invalid
-        /// lookups will be skipped allowing valid cryptocurrencies to still be returned.
+        /// lookups will be skipped allowing valid cryptocurrencies to still be returned. Note: This parameter is only used in the
+        /// https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical version.
         /// </param>
         /// <returns></returns>
         public ApiResponse<CryptocurrencyOhlcvHistorical> OhlcvHistoricalBySlug(
@@ -978,7 +980,8 @@ namespace CoinMarketCap.Client
         /// Pass <value>true</value> to relax request validation rules. When requesting records on multiple
         /// cryptocurrencies an error is returned if any invalid cryptocurrencies are requested or a
         /// cryptocurrency does not have matching records in the requested timeframe. If set to true, invalid
-        /// lookups will be skipped allowing valid cryptocurrencies to still be returned.
+        /// lookups will be skipped allowing valid cryptocurrencies to still be returned. Note: This parameter is only used in the
+        /// https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical version.
         /// </param>
         /// <returns></returns>
         public ApiResponse<CryptocurrencyOhlcvHistorical> OhlcvHistoricalBySymbol(
@@ -1045,7 +1048,8 @@ namespace CoinMarketCap.Client
         /// Pass <value>true</value> to relax request validation rules. When requesting records on multiple
         /// cryptocurrencies an error is returned if any invalid cryptocurrencies are requested or a
         /// cryptocurrency does not have matching records in the requested timeframe. If set to true, invalid
-        /// lookups will be skipped allowing valid cryptocurrencies to still be returned.
+        /// lookups will be skipped allowing valid cryptocurrencies to still be returned. Note: This parameter is only used in the
+        /// https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical version.
         /// </param>
         /// <returns>Results of your query returned as an object.</returns>
         public ApiResponse<CryptocurrencyOhlcvHistorical> OhlcvHistorical(
