@@ -51,15 +51,19 @@ namespace CoinMarketCap.DataContracts
         public string TimeClose { get; set; }
 
         /// <summary>
-        /// Timestamp (ISO 8601) of the high of this time series interval. Note: This data member is only returned in the 
+        /// Timestamp (ISO 8601) of the high of this time series interval.
+        /// <remark>This data member is only returned in the 
         /// https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical version.
+        /// </remark>
         /// </summary>
         [DataMember(Name = "time_high")]
         public string TimeHigh { get; set; }
 
         /// <summary>
-        /// Timestamp (ISO 8601) of the low of this time series interval. Note: This data member is only returned in the 
+        /// Timestamp (ISO 8601) of the low of this time series interval. 
+        /// <remark>This data member is only returned in the 
         /// https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical version.
+        /// </remark>
         /// </summary>
         [DataMember(Name = "time_low")]
         public string TimeLow { get; set; }
