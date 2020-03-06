@@ -64,13 +64,12 @@ namespace CoinMarketCapDemo
             Console.WriteLine("\t[6] Quotes Historical");
             Console.WriteLine("\t[7] Market Pairs Latest");
             Console.WriteLine("\t[8] OHLCV Latest");
-            Console.WriteLine("\t[9] [TODO] OHLCV Historical");
+            Console.WriteLine("\t[9] OHLCV Historical");
             Console.WriteLine("\t[0] [TODO] Price Performance Stats Latest");
             Console.WriteLine("\t[x] Back to Main Menu");
             var input = Console.ReadLine();
             switch (input?.Trim().ToLowerInvariant() ?? string.Empty)
             {
-                case "9":
                 case "0":
                     Console.WriteLine("\nComing soon...");
                     return true;
@@ -97,6 +96,9 @@ namespace CoinMarketCapDemo
                     return true;
                 case "8":
                     CryptocurrencyOhlcvLatest();
+                    return true;
+                case "9":
+                    CryptocurrencyOhlcvHistorical();
                     return true;
                 case "x":
                     return false;
@@ -183,7 +185,7 @@ namespace CoinMarketCapDemo
             Console.WriteLine("\nEnter symbol: ");
             var symbol = Console.ReadLine();
 
-            Console.WriteLine("\nEnter start date: ");
+            Console.WriteLine("\nEnter start date (YYYY-MM-DD): ");
             DateTime startDate;
 
             while (!DateTime.TryParse(Console.ReadLine(), out startDate))
@@ -192,7 +194,7 @@ namespace CoinMarketCapDemo
                 Console.WriteLine("\nEnter start date: ");
             }
 
-            Console.WriteLine("\nEnter end date: ");
+            Console.WriteLine("\nEnter end date (YYYY-MM-DD): ");
             DateTime endDate;
 
             while (!DateTime.TryParse(Console.ReadLine(), out endDate))
@@ -219,6 +221,33 @@ namespace CoinMarketCapDemo
 
             ShowResponseAndWait(json);
         }
+
+        private static void CryptocurrencyOhlcvHistorical()
+        {
+            Console.WriteLine("\nEnter symbol: ");
+            var symbol = Console.ReadLine();
+
+            Console.WriteLine("\nEnter start date (YYYY-MM-DD):");
+            DateTime startDate;
+            while (!DateTime.TryParse(Console.ReadLine(), out startDate))
+            {
+                Console.WriteLine("\nInvalid date. Please enter a date using the format YYYY-MM-DD\nEnter start date: ");
+            }
+
+            Console.WriteLine("\nEnter end date (YYYY-MM-DD):");
+            DateTime endDate;
+            while (!DateTime.TryParse(Console.ReadLine(), out endDate))
+            {
+                Console.WriteLine("\nInvalid date. Please enter a date using the format YYYY-MM-DD\nEnter start date: ");
+            }
+
+            var client = new CryptocurrencyClient();
+            var response = client.OhlcvHistoricalBySymbol(symbol, null, startDate, endDate);
+            var json = JsonConvert.SerializeObject(response, Formatting.Indented);
+
+            ShowResponseAndWait(json);
+        }
+
         private static void ShowResponseAndWait(string json)
         {
             Console.WriteLine("Response:");

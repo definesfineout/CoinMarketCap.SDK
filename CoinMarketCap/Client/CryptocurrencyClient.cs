@@ -822,13 +822,270 @@ namespace CoinMarketCap.Client
 
         #region Endpoint: /v1/cryptocurrency/ohlcv/historical - Historical OHLCV
 
+
         /// <summary>
-        /// 
+        /// <see cref="OhlcvHistorical"/>
         /// </summary>
+        /// <param name="id">
+        /// One or more comma-separated cryptocurrency CoinMarketCap IDs.
+        /// Example: <value>a,2</value>
+        /// </param>
+        /// <param name="timePeriod">
+        /// Time period to return OHLCV data for.
+        ///     Default: <value>daily</value>
+        ///     Valid values: <see cref="eTimePeriodOhlcvHistorical"/>
+        ///     See https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical for complete details.
+        /// </param>
+        /// <param name="timeStart">
+        /// Timestamp (Unix or ISO 8601) to start returning OHLCV time periods for. Only the date portion of the timestamp is
+        /// used for daily OHLCV so it's recommended to send an ISO date format like <value>2018-09-19</value> without time.
+        /// </param>
+        /// <param name="timeEnd">
+        /// Timestamp (Unix or ISO 8601) to stop returning OHLCV time periods for (inclusive). Optional, if not passed we'll
+        /// default to the current time. Only the date portion of the timestamp is used for daily OHLCV so it's recommended to
+        /// send an ISO date format like <value>2018-09-19</value> without time.
+        /// </param>
+        /// <param name="count">
+        /// Optionally limit the number of time periods to return results for.
+        ///     Default: <value>10</value>
+        ///     Valid values: <value>[1 .. 10000]</value>
+        /// </param>
+        /// <param name="interval">
+        /// Optionally adjust the interval that <see cref="time_period"/> is sampled. <see cref="eIntervalOhlcvHistorical"/> for
+        /// available options.
+        /// </param>
+        /// <param name="convert">
+        /// By default market quotes are returned in <value>USD</value>. Optionally calculate market quotes in up to 3 fiat
+        /// currencies or cryptocurrencies.
+        /// </param>
+        /// <param name="convertId">
+        /// Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is
+        /// identical to <see cref="convert"/> outside of ID format. Ex: <value>convert_id=1,2781</value>
+        /// would replace <value>convert=BTC,USD</value> in your query. This parameter cannot be used when
+        /// <see cref="convert"/> is used.
+        /// </param>
+        /// <param name="skipInvalid">
+        /// Pass <value>true</value> to relax request validation rules. When requesting records on multiple
+        /// cryptocurrencies an error is returned if any invalid cryptocurrencies are requested or a
+        /// cryptocurrency does not have matching records in the requested timeframe. If set to true, invalid
+        /// lookups will be skipped allowing valid cryptocurrencies to still be returned. Note: This parameter is only used in the
+        /// https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical version.
+        /// </param>
         /// <returns></returns>
-        public ApiResponse<Object> OhlcvHistorical()
+        public ApiResponse<CryptocurrencyOhlcvHistorical> OhlcvHistoricalById(
+            string id, eTimePeriodOhlcvHistorical? timePeriod = null,
+            DateTime? timeStart = null, DateTime? timeEnd = null,
+            int? count = null, eIntervalOhlcvHistorical? interval = null,
+            string convert = null, string convertId = null, bool? skipInvalid = null)
         {
-            throw new NotImplementedException();
+            return OhlcvHistorical(id, null, null, timePeriod, timeStart, timeEnd, count, interval, convert, convertId, skipInvalid);
+        }
+
+        /// <summary>
+        /// <see cref="OhlcvHistorical"/>
+        /// </summary>
+        /// <param name="slug">
+        /// Alternatively pass a comma-separated list of cryptocurrency slugs. Example: <value>bitcoin</value>, 
+        /// <value>ethereum</value>
+        /// </param>
+        /// <param name="timePeriod">
+        /// Time period to return OHLCV data for.
+        ///     Default: <value>daily</value>
+        ///     Valid values: <see cref="eTimePeriodOhlcvHistorical"/>
+        ///     See https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical for complete details.
+        /// </param>
+        /// <param name="timeStart">
+        /// Timestamp (Unix or ISO 8601) to start returning OHLCV time periods for. Only the date portion of the timestamp is
+        /// used for daily OHLCV so it's recommended to send an ISO date format like <value>2018-09-19</value> without time.
+        /// </param>
+        /// <param name="timeEnd">
+        /// Timestamp (Unix or ISO 8601) to stop returning OHLCV time periods for (inclusive). Optional, if not passed we'll
+        /// default to the current time. Only the date portion of the timestamp is used for daily OHLCV so it's recommended to
+        /// send an ISO date format like <value>2018-09-19</value> without time.
+        /// </param>
+        /// <param name="count">
+        /// Optionally limit the number of time periods to return results for.
+        ///     Default: <value>10</value>
+        ///     Valid values: <value>[1 .. 10000]</value>
+        /// </param>
+        /// <param name="interval">
+        /// Optionally adjust the interval that <see cref="time_period"/> is sampled. <see cref="eIntervalOhlcvHistorical"/> for
+        /// available options.
+        /// </param>
+        /// <param name="convert">
+        /// By default market quotes are returned in <value>USD</value>. Optionally calculate market quotes in up to 3 fiat
+        /// currencies or cryptocurrencies.
+        /// </param>
+        /// <param name="convertId">
+        /// Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is
+        /// identical to <see cref="convert"/> outside of ID format. Ex: <value>convert_id=1,2781</value>
+        /// would replace <value>convert=BTC,USD</value> in your query. This parameter cannot be used when
+        /// <see cref="convert"/> is used.
+        /// </param>
+        /// <param name="skipInvalid">
+        /// Pass <value>true</value> to relax request validation rules. When requesting records on multiple
+        /// cryptocurrencies an error is returned if any invalid cryptocurrencies are requested or a
+        /// cryptocurrency does not have matching records in the requested timeframe. If set to true, invalid
+        /// lookups will be skipped allowing valid cryptocurrencies to still be returned. Note: This parameter is only used in the
+        /// https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical version.
+        /// </param>
+        /// <returns></returns>
+        public ApiResponse<CryptocurrencyOhlcvHistorical> OhlcvHistoricalBySlug(
+        string slug, eTimePeriodOhlcvHistorical? timePeriod = null,
+        DateTime? timeStart = null, DateTime? timeEnd = null,
+        int? count = null, eIntervalOhlcvHistorical? interval = null,
+        string convert = null, string convertId = null, bool? skipInvalid = null)
+        {
+            return OhlcvHistorical(null, slug, null, timePeriod, timeStart, timeEnd, count, interval, convert, convertId, skipInvalid);
+        }
+
+        /// <summary>
+        /// <see cref="OhlcvHistorical"/>
+        /// </summary>
+        /// <param name="symbol">
+        /// Alternatively pass one or more comma-separated cryptocurrency symbols. Example: <value>BTC,ETH</value>.
+        /// At least one of <see cref="id"/>, <see cref="slug"/>, or <see cref="symbol"/> is required.
+        /// </param>
+        /// <param name="timePeriod">
+        /// Time period to return OHLCV data for.
+        ///     Default: <value>daily</value>
+        ///     Valid values: <see cref="eTimePeriodOhlcvHistorical"/>
+        ///     See https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical for complete details.
+        /// </param>
+        /// <param name="timeStart">
+        /// Timestamp (Unix or ISO 8601) to start returning OHLCV time periods for. Only the date portion of the timestamp is
+        /// used for daily OHLCV so it's recommended to send an ISO date format like <value>2018-09-19</value> without time.
+        /// </param>
+        /// <param name="timeEnd">
+        /// Timestamp (Unix or ISO 8601) to stop returning OHLCV time periods for (inclusive). Optional, if not passed we'll
+        /// default to the current time. Only the date portion of the timestamp is used for daily OHLCV so it's recommended to
+        /// send an ISO date format like <value>2018-09-19</value> without time.
+        /// </param>
+        /// <param name="count">
+        /// Optionally limit the number of time periods to return results for.
+        ///     Default: <value>10</value>
+        ///     Valid values: <value>[1 .. 10000]</value>
+        /// </param>
+        /// <param name="interval">
+        /// Optionally adjust the interval that <see cref="time_period"/> is sampled. <see cref="eIntervalOhlcvHistorical"/> for
+        /// available options.
+        /// </param>
+        /// <param name="convert">
+        /// By default market quotes are returned in <value>USD</value>. Optionally calculate market quotes in up to 3 fiat
+        /// currencies or cryptocurrencies.
+        /// </param>
+        /// <param name="convertId">
+        /// Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is
+        /// identical to <see cref="convert"/> outside of ID format. Ex: <value>convert_id=1,2781</value>
+        /// would replace <value>convert=BTC,USD</value> in your query. This parameter cannot be used when
+        /// <see cref="convert"/> is used.
+        /// </param>
+        /// <param name="skipInvalid">
+        /// Pass <value>true</value> to relax request validation rules. When requesting records on multiple
+        /// cryptocurrencies an error is returned if any invalid cryptocurrencies are requested or a
+        /// cryptocurrency does not have matching records in the requested timeframe. If set to true, invalid
+        /// lookups will be skipped allowing valid cryptocurrencies to still be returned. Note: This parameter is only used in the
+        /// https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical version.
+        /// </param>
+        /// <returns></returns>
+        public ApiResponse<CryptocurrencyOhlcvHistorical> OhlcvHistoricalBySymbol(
+        string symbol, eTimePeriodOhlcvHistorical? timePeriod = null,
+        DateTime? timeStart = null, DateTime? timeEnd = null,
+        int? count = null, eIntervalOhlcvHistorical? interval = null,
+        string convert = null, string convertId = null, bool? skipInvalid = null)
+        {
+            return OhlcvHistorical(null, null, symbol, timePeriod, timeStart, timeEnd, count, interval, convert, convertId, skipInvalid);
+        }
+
+        /// <summary>
+        /// Returns historical OHLCV (Open, High, Low, Close, Volume) data along with market cap for any cryptocurrency using
+        /// time interval parameters. Currently daily and hourly OHLCV periods are supported. Volume is only supported with
+        /// daily periods at this time.
+        /// </summary>
+        /// <param name="id">
+        /// One or more comma-separated cryptocurrency CoinMarketCap IDs.
+        /// Example: <value>a,2</value>
+        /// </param>
+        /// <param name="slug">
+        /// Alternatively pass a comma-separated list of cryptocurrency slugs. Example: <value>bitcoin</value>, 
+        /// <value>ethereum</value>
+        /// </param>
+        /// <param name="symbol">
+        /// Alternatively pass one or more comma-separated cryptocurrency symbols. Example: <value>BTC,ETH</value>.
+        /// At least one of <see cref="id"/>, <see cref="slug"/>, or <see cref="symbol"/> is required.
+        /// </param>
+        /// <param name="timePeriod">
+        /// Time period to return OHLCV data for.
+        ///     Default: <value>daily</value>
+        ///     Valid values: <see cref="eTimePeriodOhlcvHistorical"/>
+        ///     See https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical for complete details.
+        /// </param>
+        /// <param name="timeStart">
+        /// Timestamp (Unix or ISO 8601) to start returning OHLCV time periods for. Only the date portion of the timestamp is
+        /// used for daily OHLCV so it's recommended to send an ISO date format like <value>2018-09-19</value> without time.
+        /// </param>
+        /// <param name="timeEnd">
+        /// Timestamp (Unix or ISO 8601) to stop returning OHLCV time periods for (inclusive). Optional, if not passed we'll
+        /// default to the current time. Only the date portion of the timestamp is used for daily OHLCV so it's recommended to
+        /// send an ISO date format like <value>2018-09-19</value> without time.
+        /// </param>
+        /// <param name="count">
+        /// Optionally limit the number of time periods to return results for.
+        ///     Default: <value>10</value>
+        ///     Valid values: <value>[1 .. 10000]</value>
+        /// </param>
+        /// <param name="interval">
+        /// Optionally adjust the interval that <see cref="time_period"/> is sampled. <see cref="eIntervalOhlcvHistorical"/> for
+        /// available options.
+        /// </param>
+        /// <param name="convert">
+        /// By default market quotes are returned in <value>USD</value>. Optionally calculate market quotes in up to 3 fiat
+        /// currencies or cryptocurrencies.
+        /// </param>
+        /// <param name="convertId">
+        /// Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is
+        /// identical to <see cref="convert"/> outside of ID format. Ex: <value>convert_id=1,2781</value>
+        /// would replace <value>convert=BTC,USD</value> in your query. This parameter cannot be used when
+        /// <see cref="convert"/> is used.
+        /// </param>
+        /// <param name="skipInvalid">
+        /// Pass <value>true</value> to relax request validation rules. When requesting records on multiple
+        /// cryptocurrencies an error is returned if any invalid cryptocurrencies are requested or a
+        /// cryptocurrency does not have matching records in the requested timeframe. If set to true, invalid
+        /// lookups will be skipped allowing valid cryptocurrencies to still be returned. Note: This parameter is only used in the
+        /// https://coinmarketcap.com/api/v1/#operation/getV1CryptocurrencyOhlcvHistorical version.
+        /// </param>
+        /// <returns>Results of your query returned as an object.</returns>
+        public ApiResponse<CryptocurrencyOhlcvHistorical> OhlcvHistorical(
+        string id = null, string slug = null, 
+        string symbol = null, eTimePeriodOhlcvHistorical? timePeriod = null,
+        DateTime? timeStart = null, DateTime? timeEnd = null,
+        int? count = null, eIntervalOhlcvHistorical? interval = null,
+        string convert = null, string convertId = null, bool? skipInvalid = null)
+        {
+            if (string.IsNullOrWhiteSpace(id) &&
+               string.IsNullOrWhiteSpace(slug) &&
+               string.IsNullOrWhiteSpace(symbol))
+            {
+                throw new ArgumentException($"Must specify one of: {nameof(id)}, {nameof(slug)}, or {nameof(symbol)}",
+                    nameof(id));
+            }
+
+            return ApiRequest<ApiResponse<CryptocurrencyOhlcvHistorical>>("cryptocurrency/ohlcv/historical",
+               new Dictionary<string, string>
+               {
+                   ["id"] = id,
+                   ["slug"] = slug,
+                   ["symbol"] = symbol,
+                   ["time_period"] = timePeriod?.GetDescription(),
+                   ["time_start"] = timeStart?.ToString("yyyy-MM-dd"),
+                   ["time_end"] = timeEnd?.ToString("yyyy-MM-dd"),
+                   ["count"] = count?.ToString(),
+                   ["interval"] = interval?.GetDescription(),
+                   ["convert"] = convert,
+                   ["convert_id"] = convertId,
+                   ["skip_invalid"] = skipInvalid.HasValue && skipInvalid.Value ? "true" : string.Empty
+               });
         }
 
         #endregion Endpoint: /v1/cryptocurrency/ohlcv/historical - Historical OHLCV
