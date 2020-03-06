@@ -6,6 +6,12 @@ CoinMarketCap.SDK targets [.NET Standard 2.0](https://docs.microsoft.com/en-us/d
 ![.NET Core](https://github.com/definesfineout/CoinMarketCap.SDK/workflows/.NET%20Core/badge.svg?branch=master) 
 
 ## Quick Start
+Install the package via NuGet:
+
+```
+PM> Install-Package CoinMarketCap.SDK
+```
+
 Simply grab your [CoinMarketCap API](https://coinmarketcap.com/api/) key, and new up a client for your desired endpoint category. Then, call any of the client's methods:
 
 ```c#
