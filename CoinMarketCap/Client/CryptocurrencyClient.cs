@@ -35,6 +35,12 @@ namespace CoinMarketCap.Client
                     $"{nameof(start)} must be greater than or equal to 1.");
             }
 
+            if (limit.HasValue && (limit < 1 || limit > 5000))
+            {
+                throw new ArgumentOutOfRangeException(nameof(limit), limit.Value,
+                    $"{nameof(limit)} must be between 1 and 5000.");
+            }
+
             return ApiRequest<ApiResponseList<CryptocurrencyIdMapping>>("cryptocurrency/map",
                 new Dictionary<string, string>
                 {
