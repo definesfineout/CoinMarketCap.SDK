@@ -6,7 +6,6 @@
 
 trigger:
 - release/*
-# - release/*
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -31,14 +30,25 @@ steps:
     publishWebProjects: false
     projects: '**/CoinMarketCap.csproj'
     arguments: '--configuration $(Build.Configuration) --output $(Build.ArtifactStagingDirectory)'
+#- task: DotNetCoreCLI@2
+#  displayName: "dotnet pack"
+#  inputs:
+#    command: 'pack'
+#    packagesToPack: '**/CoinMarketCap.csproj'
+#    includesymbols: true
+#    versioningScheme: 'off'
 - task: DotNetCoreCLI@2
   displayName: "dotnet pack"
   inputs:
     command: 'pack'
     packagesToPack: '**/CoinMarketCap.csproj'
     includesymbols: true
-    versioningScheme: 'off'
+    versioningScheme: 'byPrereleaseNumber'
+    majorVersion: '0'
+    minorVersion: '1'
+    patchVersion: '0'
 - task: DotNetCoreCLI@2
+  displayName: "nuget push"
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
