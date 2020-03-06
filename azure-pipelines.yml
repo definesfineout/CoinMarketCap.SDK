@@ -5,8 +5,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- 20200301_dfineout_issue12_nuget_prep
-# - release/*
+- release/*
 
 pool:
   vmImage: 'ubuntu-latest'
