@@ -9,8 +9,8 @@
     <Description>A free, open-source .NET client SDK for the [CoinMarketCap API](https://coinmarketcap.com/api/).</Description>
     <Copyright>© 2020 Defines Fineout</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/dustinfineout/coinmarketcap.net</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/dustinfineout/coinmarketcap.net.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/definesfineout/coinmarketcap.net</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/definesfineout/coinmarketcap.net.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
