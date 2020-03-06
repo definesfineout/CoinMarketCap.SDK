@@ -241,7 +241,7 @@ namespace CoinMarketCapDemo
                 Console.WriteLine("\nInvalid date. Please enter a date using the format YYYY-MM-DD\nEnter start date: ");
             }
 
-            var client = new CryptocurrencyClient();
+            var client = new CryptocurrencyClient(ApiKey, Sandbox);
             var response = client.OhlcvHistoricalBySymbol(symbol, null, startDate, endDate);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
