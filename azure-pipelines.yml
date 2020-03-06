@@ -39,7 +39,7 @@ steps:
     versioningScheme: 'byPrereleaseNumber'
     majorVersion: '0'
     minorVersion: '1'
-    patchVersion: '0'
+    patchVersion: '1'
 - task: DotNetCoreCLI@2
   displayName: "nuget push"
   inputs:
