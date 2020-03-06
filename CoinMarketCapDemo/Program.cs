@@ -14,7 +14,7 @@ namespace CoinMarketCapDemo
 
         public static void Main(string[] args)
         {
-            Console.WriteLine("CoinMarketCap.NET Demo\n");
+            Console.WriteLine("CoinMarketCap.SDK Demo\n");
             try
             {
                 var swim = true;
