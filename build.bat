@@ -14,5 +14,6 @@ REM if "%nuget%" == "" (
 REM 	set nuget=nuget
 REM )
 
+dotnet restore CoinMarketCap\CoinMarketCap.csproj
 dotnet msbuild CoinMarketCap\CoinMarketCap.csproj /p:Configuration="%config%" /m /v:M /fl /flp:LogFile=msbuild.log;Verbosity=diag /nr:false
 dotnet pack CoinMarketCap\CoinMarketCap.csproj --configuration %config% --verbosity detailed --include-symbols
