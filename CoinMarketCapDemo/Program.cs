@@ -253,7 +253,7 @@ namespace CoinMarketCapDemo
             Console.WriteLine("\nEnter symbol: ");
             var symbol = Console.ReadLine();
 
-            var client = new CryptocurrencyClient();
+            var client = new CryptocurrencyClient(ApiKey, Sandbox);
             var response = client.PricePerformanceStatsBySymbol(symbol);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
