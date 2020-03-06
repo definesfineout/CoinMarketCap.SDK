@@ -9,6 +9,10 @@ namespace CoinMarketCap.Client
     // ReSharper disable once UnusedMember.Global
     public class CryptocurrencyClient : ApiClientBase
     {
+        public CryptocurrencyClient(string apiKey, bool sandbox = false)
+            : base(apiKey, sandbox)
+        { }
+
         #region Endpoint: /v1/cryptocurrency/map - CoinMarketCap ID map
 
         /// <summary>

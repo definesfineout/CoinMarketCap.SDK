@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,10 +10,8 @@ namespace CoinMarketCap.Client
 {
     public abstract class ApiClientBase
     {
-        private readonly string _apiKey = ConfigurationManager.AppSettings["CoinMarketCap.ApiKey"];
-
-        private readonly bool _sandbox =
-            ConfigurationManager.AppSettings["CoinMarketCap.Sandbox"]?.ToLowerInvariant().Equals("true") ?? false;
+        private readonly string _apiKey;
+        private readonly bool _sandbox;
 
         private const string ApiBaseUrlPro = "https://pro-api.coinmarketcap.com/v1/";
         private const string ApiBaseUrlSandbox = "https://sandbox-api.coinmarketcap.com/v1/";
@@ -23,6 +20,12 @@ namespace CoinMarketCap.Client
             _sandbox
                 ? ApiBaseUrlSandbox
                 : ApiBaseUrlPro;
+
+        protected ApiClientBase(string apiKey, bool sandbox = false)
+        {
+            _apiKey = apiKey;
+            _sandbox = sandbox;
+        }
 
         protected T ApiRequest<T>(string endpoint, Dictionary<string, string> parameters) where T : class
         {           

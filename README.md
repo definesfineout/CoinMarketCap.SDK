@@ -6,27 +6,16 @@ CoinMarketCap .NET targets [.NET Standard 2.0](https://docs.microsoft.com/en-us/
 ![.NET Core](https://github.com/dustinfineout/coinmarketcap.net/workflows/.NET%20Core/badge.svg?branch=master) 
 
 ## Quick Start
-Add your [CoinMarketCap API](https://coinmarketcap.com/api/) key to your application's settings:
-
-```xml
-<configuration>
-  <appSettings>
-    <add key="CoinMarketCap.ApiKey" value="YOUR API KEY HERE"/>
-    <add key="CoinMarketCap.Sandbox" value="true"/>
-  </appSettings>
-</configuration>
-```
-
-The `CoinMarketCap.Sandbox` setting specifies whether to use the `sandbox-api.coinmarketcap.com` host, instead of the default `pro-api.coinmarketcap.com`.
-
-Now, simply new up a client for your desired endpoint category and call any of the client's methods:
+Simply grab your [CoinMarketCap API](https://coinmarketcap.com/api/) key, and new up a client for your desired endpoint category. Then, call any of the client's methods:
 
 ```c#
 using CoinMarketCap;
 
-var client = new CryptocurrencyClient();
+var client = new CryptocurrencyClient(apiKey:"YOUR API KEY HERE", sandbox:true);
 var response = client.Metadata("XTZ");
 ```
+
+The `sandbox` parameter specifies whether to use the `sandbox-api.coinmarketcap.com` host, instead of the default `pro-api.coinmarketcap.com`.
 
 ## Demo Application
 
@@ -34,10 +23,7 @@ There is a `CoinMarketCapDemo` console application project included in the solut
 
 ## Contribute
 
-You are welcome to fork and send pull requests. Code reviews and suggestions are always appreciated!
-
-* [How To: Fork a GitHub Repository & Submit a Pull Request](https://jarv.is/notes/how-to-pull-request-fork-github/)
-* [How to keep your fork up to date with its origin](https://about.gitlab.com/blog/2016/12/01/how-to-keep-your-fork-up-to-date-with-its-origin/)
+You are welcome to fork and send pull requests. Code reviews and suggestions are always appreciated! See the [Contributor Guide](https://github.com/dustinfineout/coinmarketcap.net/wiki/Contributor-Guide) to get started.
 
 To get in touch, [email Defines Fineout](mailto:dustin.fineout@gmail.com).
 

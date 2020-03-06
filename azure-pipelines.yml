@@ -12,22 +12,48 @@ pool:
 
 steps:
 - task: DotNetCoreCLI@2
+  displayName: "dotnet restore"
   inputs:
     command: 'restore'
-    projects: '**/*.csproj'
+    projects: '**/CoinMarketCap.csproj'
     feedsToUse: 'select'
 - task: DotNetCoreCLI@2
+  displayName: "dotnet build"
   inputs:
     command: 'build'
     projects: '**/CoinMarketCap.csproj'
-    arguments: '/p:Configuration="$(buildConfiguration)"'
+    arguments: '/p:Configuration="$(Build.Configuration)"'
 - task: DotNetCoreCLI@2
+  displayName: "dotnet publish"
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/CoinMarketCap.csproj'
+    arguments: '--configuration $(Build.Configuration) --output $(Build.ArtifactStagingDirectory)'
+#- task: DotNetCoreCLI@2
+#  displayName: "dotnet pack"
+#  inputs:
+#    command: 'pack'
+#    packagesToPack: '**/CoinMarketCap.csproj'
+#    includesymbols: true
+#    versioningScheme: 'off'
+- task: DotNetCoreCLI@2
+  displayName: "dotnet pack"
   inputs:
     command: 'pack'
-    packagesToPack: '**/*.csproj'
-    nobuild: true
+    packagesToPack: '**/CoinMarketCap.csproj'
     includesymbols: true
-    versioningScheme: 'byBuildNumber'
+    versioningScheme: 'byPrereleaseNumber'
+    majorVersion: '0'
+    minorVersion: '1'
+    patchVersion: '0'
+- task: DotNetCoreCLI@2
+  displayName: "nuget push"
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: 'd4226f2d-a76d-4e1e-809f-32389de7ceff/1c6d2c22-e8b0-47bb-a77d-8b97222ba7a6'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
