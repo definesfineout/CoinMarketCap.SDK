@@ -30,13 +30,6 @@ steps:
     publishWebProjects: false
     projects: '**/CoinMarketCap.csproj'
     arguments: '--configuration $(Build.Configuration) --output $(Build.ArtifactStagingDirectory)'
-#- task: DotNetCoreCLI@2
-#  displayName: "dotnet pack"
-#  inputs:
-#    command: 'pack'
-#    packagesToPack: '**/CoinMarketCap.csproj'
-#    includesymbols: true
-#    versioningScheme: 'off'
 - task: DotNetCoreCLI@2
   displayName: "dotnet pack"
   inputs:
