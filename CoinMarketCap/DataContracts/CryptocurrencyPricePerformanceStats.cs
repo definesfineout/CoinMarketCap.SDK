@@ -50,7 +50,7 @@ namespace CoinMarketCap.DataContracts
     }
 
     /// <summary>
-    /// An object map of time periods.
+    /// Quotes for a specified time period for a cryptocurrency
     /// </summary>
     [DataContract]
     public class TimePeriods
