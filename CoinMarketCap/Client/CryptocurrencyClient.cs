@@ -1057,7 +1057,7 @@ namespace CoinMarketCap.Client
         /// </param>
         /// <returns>Results of your query returned as an object.</returns>
         public ApiResponse<CryptocurrencyOhlcvHistorical> OhlcvHistorical(
-        string id = null, string slug = null, 
+        string id = null, string slug = null,
         string symbol = null, eTimePeriodOhlcvHistorical? timePeriod = null,
         DateTime? timeStart = null, DateTime? timeEnd = null,
         int? count = null, eIntervalOhlcvHistorical? interval = null,
@@ -1090,5 +1090,174 @@ namespace CoinMarketCap.Client
 
         #endregion Endpoint: /v1/cryptocurrency/ohlcv/historical - Historical OHLCV
 
+        #region Endpoint: /v1/cryptocurrency/price-performance-stats/latest - Price Performance Stats
+
+        /// <summary>
+        /// <see cref="PricePerformanceStats"/>
+        /// </summary>
+        /// <param name="id">
+        /// One or more comma-separated cryptocurrency CoinMarketCap IDs.
+        /// Example: <value>a,2</value>
+        /// </param>
+        /// <param name="timePeriod">
+        /// Specify one or more comma-delimited time periods to return stats for. 
+        ///     Default: <value>all_time</value>
+        ///     Pass all <see cref="eTimePeriodPricePerformanceStats"/> to return all supported time periods.
+        /// All rolling periods have a rolling close time of the current request time. For example <value>24h</value> would have a
+        /// close time of now and an open time of 24 hours before now. Please note: <value>yesterday</value> is a UTC period and
+        /// currently does not currently support <value>high</value> and <value>low</value> timestamps.
+        /// </param>
+        /// <param name="convert">
+        /// Optionally calculate quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat
+        /// currency symbols. Each additional convert option beyond the first requires an additional call credit. A list of
+        /// supported fiat options can be found at https://coinmarketcap.com/api/documentation/v1/#section/Standards-and-Conventions
+        /// Each conversion is returned in its own <value>quote</value> object.
+        /// </param>
+        /// <param name="convertId">
+        /// Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is
+        /// identical to <see cref="convert"/> outside of ID format. Ex: <value>convert_id=1,2781</value>
+        /// would replace <value>convert=BTC,USD</value> in your query. This parameter cannot be used when
+        /// <see cref="convert"/> is used.
+        /// <returns></returns>
+        public ApiResponseMap<CryptocurrencyPricePerformanceStats> PricePerformanceStatsById(
+            string id, eTimePeriodPricePerformanceStats? timePeriod = null,
+            string convert = null, string convertId = null)
+        {
+            return PricePerformanceStats(id, null, null, timePeriod, convert, convertId);
+        }
+
+        /// <summary>
+        /// <see cref="PricePerformanceStats"/>
+        /// </summary>
+        /// <param name="slug">
+        /// Alternatively pass a comma-separated list of cryptocurrency slugs. Example: <value>bitcoin</value>, 
+        /// <value>ethereum</value>
+        /// </param>
+        /// <param name="timePeriod">
+        /// Specify one or more comma-delimited time periods to return stats for. 
+        ///     Default: <value>all_time</value>
+        ///     Pass all <see cref="eTimePeriodPricePerformanceStats"/> to return all supported time periods.
+        /// All rolling periods have a rolling close time of the current request time. For example <value>24h</value> would have a
+        /// close time of now and an open time of 24 hours before now. Please note: <value>yesterday</value> is a UTC period and
+        /// currently does not currently support <value>high</value> and <value>low</value> timestamps.
+        /// </param>
+        /// <param name="convert">
+        /// Optionally calculate quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat
+        /// currency symbols. Each additional convert option beyond the first requires an additional call credit. A list of
+        /// supported fiat options can be found at https://coinmarketcap.com/api/documentation/v1/#section/Standards-and-Conventions
+        /// Each conversion is returned in its own <value>quote</value> object.
+        /// </param>
+        /// <param name="convertId">
+        /// Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is
+        /// identical to <see cref="convert"/> outside of ID format. Ex: <value>convert_id=1,2781</value>
+        /// would replace <value>convert=BTC,USD</value> in your query. This parameter cannot be used when
+        /// <see cref="convert"/> is used.
+        /// <returns></returns>
+        public ApiResponseMap<CryptocurrencyPricePerformanceStats> PricePerformanceStatsBySlug(
+            string slug, eTimePeriodPricePerformanceStats? timePeriod = null,
+            string convert = null, string convertId = null)
+        {
+            return PricePerformanceStats(null, slug, null, timePeriod, convert, convertId);
+        }
+
+        /// <summary>
+        /// <see cref="PricePerformanceStats"/>
+        /// </summary>
+        /// <param name="symbol">
+        /// Alternatively pass one or more comma-separated cryptocurrency symbols. Example: <value>BTC,ETH</value>.
+        /// At least one of <see cref="id"/>, <see cref="slug"/>, or <see cref="symbol"/> is required.
+        /// </param>
+        /// <param name="timePeriod">
+        /// Specify one or more comma-delimited time periods to return stats for. 
+        ///     Default: <value>all_time</value>
+        ///     Pass all <see cref="eTimePeriodPricePerformanceStats"/> to return all supported time periods.
+        /// All rolling periods have a rolling close time of the current request time. For example <value>24h</value> would have a
+        /// close time of now and an open time of 24 hours before now. Please note: <value>yesterday</value> is a UTC period and
+        /// currently does not currently support <value>high</value> and <value>low</value> timestamps.
+        /// </param>
+        /// <param name="convert">
+        /// Optionally calculate quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat
+        /// currency symbols. Each additional convert option beyond the first requires an additional call credit. A list of
+        /// supported fiat options can be found at https://coinmarketcap.com/api/documentation/v1/#section/Standards-and-Conventions
+        /// Each conversion is returned in its own <value>quote</value> object.
+        /// </param>
+        /// <param name="convertId">
+        /// Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is
+        /// identical to <see cref="convert"/> outside of ID format. Ex: <value>convert_id=1,2781</value>
+        /// would replace <value>convert=BTC,USD</value> in your query. This parameter cannot be used when
+        /// <see cref="convert"/> is used.
+        /// <returns></returns>
+        public ApiResponseMap<CryptocurrencyPricePerformanceStats> PricePerformanceStatsBySymbol(
+            string symbol, eTimePeriodPricePerformanceStats? timePeriod = null,
+            string convert = null, string convertId = null)
+        {
+            return PricePerformanceStats(null, null, symbol, timePeriod, convert, convertId);
+        }
+
+        /// <summary>
+        /// Returns price performance statistics for one or more cryptocurrencies including launch price ROI and 
+        /// all-time high / all-time low. Stats are returned for an <value>all_time</value> period by default. 
+        /// UTC <value>yesterday</value> and a number of rolling time periods may be requested using the <value>time_period</value>
+        /// parameter. Utilize the <value>convert</value> parameter to translate values into multiple fiats or cryptocurrencies
+        /// using historical rates.
+        /// </summary>
+        /// <param name="id">
+        /// One or more comma-separated cryptocurrency CoinMarketCap IDs.
+        /// Example: <value>a,2</value>
+        /// </param>
+        /// <param name="slug">
+        /// Alternatively pass a comma-separated list of cryptocurrency slugs. Example: <value>bitcoin</value>, 
+        /// <value>ethereum</value>
+        /// </param>
+        /// <param name="symbol">
+        /// Alternatively pass one or more comma-separated cryptocurrency symbols. Example: <value>BTC,ETH</value>.
+        /// At least one of <see cref="id"/>, <see cref="slug"/>, or <see cref="symbol"/> is required.
+        /// </param>
+        /// <param name="timePeriod">
+        /// Specify one or more comma-delimited time periods to return stats for. 
+        ///     Default: <value>all_time</value>
+        ///     Pass all <see cref="eTimePeriodPricePerformanceStats"/> to return all supported time periods.
+        /// All rolling periods have a rolling close time of the current request time. For example <value>24h</value> would have a
+        /// close time of now and an open time of 24 hours before now. Please note: <value>yesterday</value> is a UTC period and
+        /// currently does not currently support <value>high</value> and <value>low</value> timestamps.
+        /// </param>
+        /// <param name="convert">
+        /// Optionally calculate quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat
+        /// currency symbols. Each additional convert option beyond the first requires an additional call credit. A list of
+        /// supported fiat options can be found at https://coinmarketcap.com/api/documentation/v1/#section/Standards-and-Conventions
+        /// Each conversion is returned in its own <value>quote</value> object.
+        /// </param>
+        /// <param name="convertId">
+        /// Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is
+        /// identical to <see cref="convert"/> outside of ID format. Ex: <value>convert_id=1,2781</value>
+        /// would replace <value>convert=BTC,USD</value> in your query. This parameter cannot be used when
+        /// <see cref="convert"/> is used.
+        /// <returns>An object map of cryptocurrency objects by ID, slug, or symbol (as used in query parameters).</returns>
+        public ApiResponseMap<CryptocurrencyPricePerformanceStats> PricePerformanceStats(
+             string id = null, string slug = null,
+             string symbol = null, eTimePeriodPricePerformanceStats? timePeriod = null,
+             string convert = null, string convertId = null)
+        {
+            if (string.IsNullOrWhiteSpace(id) &&
+               string.IsNullOrWhiteSpace(slug) &&
+               string.IsNullOrWhiteSpace(symbol))
+            {
+                throw new ArgumentException($"Must specify one of: {nameof(id)}, {nameof(slug)}, or {nameof(symbol)}",
+                    nameof(id));
+            }
+
+            return ApiRequest<ApiResponseMap<CryptocurrencyPricePerformanceStats>>("cryptocurrency/price-performance-stats/latest", 
+                new Dictionary<string, string>
+                {
+                    ["id"] = id,
+                    ["slug"] = slug,
+                    ["symbol"] = symbol,
+                    ["time_period"] = timePeriod?.GetDescription(),
+                    ["convert"] = convert,
+                    ["convert_id"] = convertId
+                });
+        }
+
+        #endregion Endpoint: /v1/cryptocurrency/price-performance-stats/latest - Price Performance Stats
     }
 }
