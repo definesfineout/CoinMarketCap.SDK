@@ -5,7 +5,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- 20200301_dfineout_issue12_nuget_prep
+- release/*
 # - release/*
 
 pool:
@@ -16,26 +16,26 @@ steps:
   displayName: "dotnet restore"
   inputs:
     command: 'restore'
-    projects: '**/*.csproj'
+    projects: '**/CoinMarketCap.csproj'
     feedsToUse: 'select'
 - task: DotNetCoreCLI@2
   displayName: "dotnet build"
   inputs:
     command: 'build'
-    projects: '**/*.csproj'
+    projects: '**/CoinMarketCap.csproj'
     arguments: '/p:Configuration="$(Build.Configuration)"'
 - task: DotNetCoreCLI@2
   displayName: "dotnet publish"
   inputs:
     command: 'publish'
     publishWebProjects: false
-    projects: '**/*.csproj'
+    projects: '**/CoinMarketCap.csproj'
     arguments: '--configuration $(Build.Configuration) --output $(Build.ArtifactStagingDirectory)'
 - task: DotNetCoreCLI@2
   displayName: "dotnet pack"
   inputs:
     command: 'pack'
-    packagesToPack: '**/*.csproj'
+    packagesToPack: '**/CoinMarketCap.csproj'
     includesymbols: true
     versioningScheme: 'off'
 - task: DotNetCoreCLI@2
@@ -47,5 +47,5 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'CoinMarketCap-rc'
+    ArtifactName: 'CoinMarketCap'
     publishLocation: 'Container'
