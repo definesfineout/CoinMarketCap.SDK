@@ -1,9 +1,9 @@
-# CoinMarketCap .NET
+# CoinMarketCap.SDK
 A free, open-source .NET client SDK for the [CoinMarketCap API](https://coinmarketcap.com/api/).
 
-CoinMarketCap .NET targets [.NET Standard 2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) and is supported by the following platforms: .NET Core, .NET Framework, Mono, Xamarin.iOS, Xamarin.Mac, Xamarin.Android, Universal Windows Platform, and Unity.
+CoinMarketCap.SDK targets [.NET Standard 2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) and is supported by the following platforms: .NET Core, .NET Framework, Mono, Xamarin.iOS, Xamarin.Mac, Xamarin.Android, Universal Windows Platform, and Unity.
 
-![.NET Core](https://github.com/definesfineout/coinmarketcap.net/workflows/.NET%20Core/badge.svg?branch=master) 
+![.NET Core](https://github.com/definesfineout/CoinMarketCap.SDK/workflows/.NET%20Core/badge.svg?branch=master) 
 
 ## Quick Start
 Simply grab your [CoinMarketCap API](https://coinmarketcap.com/api/) key, and new up a client for your desired endpoint category. Then, call any of the client's methods:
@@ -23,12 +23,12 @@ There is a `CoinMarketCapDemo` console application project included in the solut
 
 ## Contribute
 
-You are welcome to fork and send pull requests. Code reviews and suggestions are always appreciated! See the [Contributor Guide](https://github.com/definesfineout/coinmarketcap.net/wiki/Contributor-Guide) to get started.
+You are welcome to fork and send pull requests. Code reviews and suggestions are always appreciated! See the [Contributor Guide](https://github.com/definesfineout/CoinMarketCap.SDK/wiki/Contributor-Guide) to get started.
 
 To get in touch, [email Defines Fineout](mailto:dustin.fineout@gmail.com).
 
 ### Tips
-CoinMarketCap .NET will always be free.
+CoinMarketCap.SDK will always be free.
 
 Tips are lovely via [Brave Rewards](https://brave.com/dus347), or to the following addresses:
 

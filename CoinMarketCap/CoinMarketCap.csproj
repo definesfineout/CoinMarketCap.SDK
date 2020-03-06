@@ -3,14 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Deterministic>false</Deterministic>
-    <Product>CoinMarketCap .NET</Product>
+    <Product>CoinMarketCap.SDK</Product>
     <Authors>Defines Fineout</Authors>
     <Company>Defines Fineout</Company>
     <Description>A free, open-source .NET client SDK for the CoinMarketCap API.</Description>
     <Copyright>© 2020 Defines Fineout</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/definesfineout/coinmarketcap.net</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/definesfineout/coinmarketcap.net.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/definesfineout/CoinMarketCap.SDK</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/definesfineout/CoinMarketCap.SDK.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Version>0.2.0</Version>
@@ -21,6 +21,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageIcon>coinmarketcap-logo.png</PackageIcon>
     <PackageId>CoinMarketCap.SDK</PackageId>
+    <PackageReleaseNotes />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

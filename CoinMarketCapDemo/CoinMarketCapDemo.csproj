@@ -5,12 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>Defines Fineout</Authors>
     <PackageId>CoinMarketCapDemo</PackageId>
-    <Product>CoinMarketCap .NET</Product>
+    <Product>CoinMarketCap.SDK</Product>
     <Description>A free, open-source .NET client SDK for the [CoinMarketCap API](https://coinmarketcap.com/api/).</Description>
     <Copyright>© 2020 Defines Fineout</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/definesfineout/coinmarketcap.net</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/definesfineout/coinmarketcap.net.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/definesfineout/CoinMarketCap.SDK</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/definesfineout/CoinMarketCap.SDK.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\coinmarketcap.net\CoinMarketCap\CoinMarketCap.csproj" />
+    <ProjectReference Include="..\CoinMarketCap\CoinMarketCap.csproj" />
   </ItemGroup>
 
 </Project>
