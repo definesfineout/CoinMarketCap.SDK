@@ -35,23 +35,34 @@ namespace CoinMarketCapDemo
         {
             Console.WriteLine("\nSelect category:");
             Console.WriteLine("\t[1] Cryptocurrency");
+            Console.WriteLine("\t[2] Fiat");
             Console.WriteLine("\t[x] Exit");
             var input = Console.ReadLine();
+            var swim = true;
             switch (input?.Trim().ToLowerInvariant() ?? string.Empty)
             {
                 case "1":
-                    var swim = true;
                     while (swim)
                     {
                         swim = CryptocurrencyMenu();
                     }
                     return true;
+                
+                case "2":
+                    while (swim)
+                    {
+                        swim = FiatMenu();
+                    }
+                    return true;
+                
                 case "x":
                     return false;
             }
             Console.WriteLine("\nDo what now?");
             return true;
         }
+
+        #region Cryptocurrency
 
         private static bool CryptocurrencyMenu()
         {
@@ -259,6 +270,40 @@ namespace CoinMarketCapDemo
 
             ShowResponseAndWait(json);
         }
+
+        #endregion Cryptocurrency
+
+        #region Fiat
+
+        private static bool FiatMenu()
+        {
+            Console.WriteLine("\nSelect Fiat Endpoint:\n");
+            Console.WriteLine("\t[1] Map");
+            Console.WriteLine("\t[x] Back to Main Menu");
+            var input = Console.ReadLine();
+            switch (input?.Trim().ToLowerInvariant() ?? string.Empty)
+            {
+                case "1":
+                    FiatMap();
+                    return true;
+                case "x":
+                    return false;
+            }
+            Console.WriteLine("\nDo what now?");
+            return true;
+        }
+
+
+        private static void FiatMap()
+        {
+            var client = new FiatClient(ApiKey, Sandbox);
+            var response = client.Map(1, 10, null, true);
+            var json = JsonConvert.SerializeObject(response, Formatting.Indented);
+
+            ShowResponseAndWait(json);
+        }
+
+        #endregion Fiat
 
         private static void ShowResponseAndWait(string json)
         {
