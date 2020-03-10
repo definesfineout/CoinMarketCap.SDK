@@ -36,6 +36,7 @@ namespace CoinMarketCapDemo
             Console.WriteLine("\nSelect category:");
             Console.WriteLine("\t[1] Cryptocurrency");
             Console.WriteLine("\t[2] Fiat");
+            Console.WriteLine("\t[3] Global Metrics");
             Console.WriteLine("\t[x] Exit");
             var input = Console.ReadLine();
             var swim = true;
@@ -47,14 +48,20 @@ namespace CoinMarketCapDemo
                         swim = CryptocurrencyMenu();
                     }
                     return true;
-                
+
                 case "2":
                     while (swim)
                     {
                         swim = FiatMenu();
                     }
                     return true;
-                
+                case "3":
+                    while (swim)
+                    {
+                        swim = GlobalMetricsMenu();
+                    }
+                    return true;
+
                 case "x":
                     return false;
             }
@@ -304,6 +311,41 @@ namespace CoinMarketCapDemo
         }
 
         #endregion Fiat
+
+        #region Global Metrics
+
+        private static bool GlobalMetricsMenu()
+        {
+            Console.WriteLine("\nSelect Global Metrics Endpoint:\n");
+            Console.WriteLine("\t[1] Latest Global Metrics");
+            Console.WriteLine("\t[2] Historical Global Metrics");
+            Console.WriteLine("\t[x] Back to Main Menu");
+            var input = Console.ReadLine();
+            switch (input?.Trim().ToLowerInvariant() ?? string.Empty)
+            {
+                case "1":
+                    GlobalMetricsQuotesLatest();
+                    return true;
+                case "2":
+                    Console.WriteLine("\nComing soon...");
+                    return true;
+                case "x":
+                    return false;
+            }
+            Console.WriteLine("\nDo what now?");
+            return true;
+        }
+
+        private static void GlobalMetricsQuotesLatest()
+        {
+            var client = new GlobalMetricsClient(ApiKey, Sandbox);
+            var response = client.QuotesLatest();
+            var json = JsonConvert.SerializeObject(response, Formatting.Indented);
+
+            ShowResponseAndWait(json);
+        }
+
+        #endregion Global Metrics
 
         private static void ShowResponseAndWait(string json)
         {
