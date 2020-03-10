@@ -11,7 +11,7 @@ namespace CoinMarketCap.Client
             : base(apiKey, sandbox)
         { }
 
-        #region Endpoint: /v1/global-metrics/quotes/latest - Quotes Latest
+        #region Endpoint: /v1/global-metrics/quotes/latest - Latest Global Metrics
 
         /// <summary>
         /// Returns the latest global cryptocurrency market metrics. Use the <value>convert</value> option to return market
@@ -39,10 +39,9 @@ namespace CoinMarketCap.Client
                 {
                     ["convert"] = convert,
                     ["convert_id"] = convertId
-
                 });
         }
 
-        #endregion Endpoint: /v1/global-metrics/quotes/latest - Quotes Latest
+        #endregion Endpoint: /v1/global-metrics/quotes/latest - Latest Global Metrics
     }
 }
