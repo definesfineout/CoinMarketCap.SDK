@@ -327,7 +327,7 @@ namespace CoinMarketCapDemo
                     GlobalMetricsQuotesLatest();
                     return true;
                 case "2":
-                    Console.WriteLine("\nComing soon...");
+                    GlobalMetricsQuotesHistorical();
                     return true;
                 case "x":
                     return false;
@@ -340,6 +340,22 @@ namespace CoinMarketCapDemo
         {
             var client = new GlobalMetricsClient(ApiKey, Sandbox);
             var response = client.QuotesLatest();
+            var json = JsonConvert.SerializeObject(response, Formatting.Indented);
+
+            ShowResponseAndWait(json);
+        }
+
+        private static void GlobalMetricsQuotesHistorical()
+        {
+            Console.WriteLine("\nEnter start date (YYYY-MM-DD):");
+            DateTime date;
+            while (!DateTime.TryParse(Console.ReadLine(), out date))
+            {
+                Console.WriteLine("\nInvalid date. Please enter a date using the format YYYY-MM-DD\nEnter start date: ");
+            }
+
+            var client = new GlobalMetricsClient(ApiKey, Sandbox);
+            var response = client.QuotesHistorical(date);
             var json = JsonConvert.SerializeObject(response, Formatting.Indented);
 
             ShowResponseAndWait(json);
