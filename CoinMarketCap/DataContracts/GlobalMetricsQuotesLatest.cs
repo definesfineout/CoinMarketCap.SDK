@@ -22,7 +22,7 @@ namespace CoinMarketCap.DataContracts
 
         /// <summary>
         /// Number of active cryptocurrencies tracked by CoinMarketCap. This includes all cryptocurrencies with a 
-        /// <see cref="listingStatus"/> of <value>active</value> or <value>listed</value> as returned from our 
+        /// <see cref="CryptocurrencyIdMapping.Status"/> of <value>active</value> or <value>listed</value> as returned from our 
         /// <see cref="CryptocurrencyIdMapping" /> call.
         /// </summary>
         [DataMember(Name = "active_cryptocurrencies")]
