@@ -433,7 +433,7 @@ namespace CoinMarketCap.Client
         /// <param name="interval">Interval of time to return data points for. If null, defaults to "5m".</param>
         /// <param name="convert">By default market quotes are returned in USD. Optionally calculate market quotes in up to 3 other fiat currencies or cryptocurrencies.</param>
         /// <param name="convertId">Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is identical to convert outside of ID format. Ex: convert_id=1,2781 would replace convert=BTC,USD in your query. This parameter cannot be used when convert is used.</param>
-        /// <param name="aux">Specify a comma-separated list of supplemental data fields to return. Pass "price, volume, market_cap, quote_timestamp, search_interval" to include all auxiliary fields.</param>
+        /// <param name="aux">Specify a comma-separated list of supplemental data fields to return. Pass <value>price, volume, market_cap, quote_timestamp, search_interval</value> to include all auxiliary fields.</param>
         /// <returns></returns>
         // ReSharper disable once UnusedMember.Global
         public ApiResponse<CryptocurrencyHistoricalData> QuotesHistoricalById(
@@ -454,7 +454,7 @@ namespace CoinMarketCap.Client
         /// <param name="interval">Interval of time to return data points for. If null, defaults to "5m".</param>
         /// <param name="convert">By default market quotes are returned in USD. Optionally calculate market quotes in up to 3 other fiat currencies or cryptocurrencies.</param>
         /// <param name="convertId">Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is identical to convert outside of ID format. Ex: convert_id=1,2781 would replace convert=BTC,USD in your query. This parameter cannot be used when convert is used.</param>
-        /// <param name="aux">Specify a comma-separated list of supplemental data fields to return. Pass "price, volume, market_cap, quote_timestamp, search_interval" to include all auxiliary fields.</param>
+        /// <param name="aux">Specify a comma-separated list of supplemental data fields to return. Pass <value>price, volume, market_cap, quote_timestamp, search_interval</value> to include all auxiliary fields.</param>
         /// <returns></returns>
         public ApiResponse<CryptocurrencyHistoricalData> QuotesHistoricalBySymbol(
            string symbol, DateTime? timeStart = null, DateTime? timeEnd = null,
@@ -476,7 +476,7 @@ namespace CoinMarketCap.Client
         /// <param name="interval">Interval of time to return data points for. If null, defaults to "5m".</param>
         /// <param name="convert">By default market quotes are returned in USD. Optionally calculate market quotes in up to 3 other fiat currencies or cryptocurrencies.</param>
         /// <param name="convertId">Optionally calculate market quotes by CoinMarketCap ID instead of symbol. This option is identical to convert outside of ID format. Ex: convert_id=1,2781 would replace convert=BTC,USD in your query. This parameter cannot be used when convert is used.</param>
-        /// <param name="aux">Specify a comma-separated list of supplemental data fields to return. Pass "price, volume, market_cap, quote_timestamp, search_interval" to include all auxiliary fields.</param>
+        /// <param name="aux">Specify a comma-separated list of supplemental data fields to return. Pass <value>price, volume, market_cap, quote_timestamp, search_interval</value> to include all auxiliary fields.</param>
         /// <returns>Results of your query returned as an object map.</returns>
         public ApiResponse<CryptocurrencyHistoricalData> QuotesHistorical(
             string id = null, string symbol = null, DateTime? timeStart = null,
