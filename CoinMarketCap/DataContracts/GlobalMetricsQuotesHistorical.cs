@@ -20,7 +20,7 @@ namespace CoinMarketCap.DataContracts
         /// Timestamp (ISO 8601) of when this historical quote was recorded.
         /// </summary>
         [DataMember(Name = "timestamp")]
-        public string TimeStamp { get; set; }
+        public string Timestamp { get; set; }
 
         /// <summary>
         /// The interval timestamp for the search period that this historical quote was located against.
@@ -73,10 +73,10 @@ namespace CoinMarketCap.DataContracts
         ///<value>USD</value>.
         /// </summary>
         [DataMember(Name = "quote")]
-        public Dictionary<string, MarketData> MarketDataQuote { get; set; }
+        public Dictionary<string, MarketData> Quote { get; set; }
 
     }
-
+    
     /// <summary>
     /// The market details for the current interval and currency conversion option.
     /// </summary>
